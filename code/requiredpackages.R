@@ -5,3 +5,6 @@ library(jsonlite)
 
 install.packages("httr")
 library(httr)
+
+library(devtools)
+
