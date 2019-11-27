@@ -25,12 +25,12 @@ gameAPI <- function(id, As = "parsed"){
   game_api <- content(game_api_source, as = As)
   
   if(sum(is.null(game_api$name)) == 1){
-    stop("Browse URL:", 
-    select <- askYesNo("Do you want to open Steamdb? (https://steamdb.info/)"), 
+    stop("\n", "Browse URL:", 
+    select <- askYesNo("ID not found, Do you want to search it on Steamdb? (https://steamdb.info/)"), 
     if(select == 1) browseURL("https://steamdb.info/"), "\n",  "Error : App ID is missing, please import correctly or find it at https://steamdb.info/")
     }
   
   game_api
 }
 
-#cs <- gameAPI(730)
+#csgo <- gameAPI(730)
