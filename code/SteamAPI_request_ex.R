@@ -16,4 +16,4 @@ a2
 #friendList
 b <- GET("https://api.steampowered.com/ISteamUser/GetFriendList/v1/??key=D326796762E1279B72D7B08EBB0F3117&steamid=76561198258206827")
 b2 <- content(b, as = "parsed")
-b2?content
+b2
