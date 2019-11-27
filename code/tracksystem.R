@@ -32,7 +32,7 @@ tracksys <- function(id, per, times, As = "parsed"){
       game_api_source <- GET(URLpatse)
       game_api <- content(game_api_source, as = As)
       gamevec[k, i] <- as.numeric(unlist(game_api))[1]
-      cat("ID:", id[k], "的第", i, "次紀錄完成.", "時間:", as.character(Sys.time()), ".", "在線人數:", gamevec[i], "\n")
+      cat("ID:", id[k], "的第", i, "次紀錄完成.", "時間:", as.character(Sys.time()), ".", "在線人數:", gamevec[k, i], "\n")
 
       }
     rectimevec[i] <- as.character(Sys.time())
@@ -40,8 +40,10 @@ tracksys <- function(id, per, times, As = "parsed"){
   gamevec
 }
 
-idl <- c(753, 730, 570, 570080, 1085660, 359550, 271590, 230410, 252490, 1100600, 440, 252950, 
+idl <- c(730, 570, 578080, 1085660, 359550, 271590, 230410, 252490, 1100600, 440, 252950, 
          346110, 218, 218620, 4000, 105600, 381210, 227300, 289070, 872790)
-gamelist <- tracksys(idl, 50, times = 4)
+
+gametracklist <- tracksys(idl, 50, times = 4)
+
 
 Sys.time()
