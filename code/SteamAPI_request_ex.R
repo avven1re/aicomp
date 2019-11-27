@@ -4,6 +4,7 @@ browseURL("https://steamwebapi.azurewebsites.net/")
 #current players
 csgopl_source <- GET("https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=730")
 csgopl <- content(csgopl_source, as = "parsed")
+as.numeric(unlist(csgopl))[1]
 
 csgoa <- GET("https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?appid=730&key=D326796762E1279B72D7B08EBB0F3117&steamid=76561198258206827", )
 csgob <- content(csgoa, as = "parsed")
