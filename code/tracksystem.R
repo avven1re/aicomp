@@ -17,26 +17,31 @@ gameAPI <- function(id, As = "parsed"){
 }
 
 
-tracksys <- function(id, track_gap, As = "parsed", t){
-  URLpatse <- paste0("https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=", id)
-  gamevec <- rep(NaN, t)
-  i <- 1
+tracksys <- function(id, per, times, As = "parsed"){
+  #URLpatse <- paste0("https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=", id)
+  gamevec <- matrix(NaN, length(id), times)
+  rectimevec <- rep(NaN, times)
   
-  while (i <= t) {
-  
-  game_api_source <- GET(URLpatse)
-  game_api <- content(game_api_source, as = As)
-  gamevec[i] <- as.numeric(unlist(game_api))[1]
-  cat("第", i, "次紀錄完成.", "時間:", Sys.time(),". 在線人數:", gamevec[i], "\n")
-  if(i != t){
-  Sys.sleep(track_gap)
-  }
-  i <- i + 1
-  }
+  for (i in 1 : times) {
+    if(i != 1){Sys.sleep(per)}
+    
+      for (k in 1 : length(id)) {
+      
+    
+      URLpatse <- paste0("https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=", id[k])
+      game_api_source <- GET(URLpatse)
+      game_api <- content(game_api_source, as = As)
+      gamevec[k, i] <- as.numeric(unlist(game_api))[1]
+      cat("ID:", id[k], "的第", i, "次紀錄完成.", "時間:", as.character(Sys.time()), ".", "在線人數:", gamevec[i], "\n")
+
+      }
+    rectimevec[i] <- as.character(Sys.time())
+    }
   gamevec
 }
 
-csgo_cur2 <- tracksys(730, 50, t = 3)
-plot(csgo_cur2, type = "l")
+idl <- c(753, 730, 570, 570080, 1085660, 359550, 271590, 230410, 252490, 1100600, 440, 252950, 
+         346110, 218, 218620, 4000, 105600, 381210, 227300, 289070, 872790)
+gamelist <- tracksys(idl, 50, times = 4)
 
 Sys.time()
