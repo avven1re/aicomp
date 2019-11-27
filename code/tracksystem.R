@@ -21,7 +21,6 @@ tracksys <- function(id, per, times, As = "parsed"){
   #URLpatse <- paste0("https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=", id)
   gamevec <- matrix(NaN, length(id), times)
   rectimevec <- rep(NaN, times)
-  
   for (i in 1 : times) {
     if(i != 1){Sys.sleep(per)}
     
@@ -36,14 +35,14 @@ tracksys <- function(id, per, times, As = "parsed"){
 
       }
     rectimevec[i] <- as.character(Sys.time())
-    }
-  gamevec
+    cat("\n ", "------------------¤À¹j½u---------------------", "\n", "\n")
+  }
+  out <- list(gamevec, rectimevec)
+  return(out)
+  #gamevec
 }
 
 idl <- c(730, 570, 578080, 1085660, 359550, 271590, 230410, 252490, 1100600, 440, 252950, 
          346110, 218, 218620, 4000, 105600, 381210, 227300, 289070, 872790)
 
-gametracklist <- tracksys(idl, 50, times = 4)
-
-
-Sys.time()
+gametracklist <- tracksys(idl, 1800, times = 24)
