@@ -9,5 +9,8 @@ library(httr)
 install.packages(Rcurl)
 library(RCurl)
 
+install.packages("RGA")
+library(RGA)
+
 library(devtools)
 
