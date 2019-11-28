@@ -49,5 +49,6 @@ gametracklist <- tracksys(idl, 1800, times = 24)
 
 gametrackmat <- as.data.frame(gametracklist[[1]])
 names(gametrackmat) <- gametracklist[[2]]
+gametrackmat2 <- cbind(idl, gametrackmat)
 
-write.csv(gametrackmat, file = "dataset/gametrack1128.csv")
+write.csv(gametrackmat2, file = "dataset/gametrack1128.csv")
