@@ -46,3 +46,8 @@ idl <- c(730, 570, 578080, 1085660, 359550, 271590, 230410, 252490, 1100600, 440
          346110, 218, 218620, 4000, 105600, 381210, 227300, 289070, 872790)
 
 gametracklist <- tracksys(idl, 1800, times = 24)
+
+gametrackmat <- as.data.frame(gametracklist[[1]])
+names(gametrackmat) <- gametracklist[[2]]
+
+write.csv(gametrackmat, file = "dataset/gametrack1128.csv")
