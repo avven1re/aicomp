@@ -14,3 +14,8 @@ library(RGA)
 
 library(devtools)
 
+#browseURL("https://github.com/Freguglia/rTwitchAPI)
+devtools::install_github("Freguglia/rTwitchAPI")
+library(rTwitchAPI)
+
+
