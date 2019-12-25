@@ -39,8 +39,8 @@
 況、對機構與社會保障制度的信任程度等資料。本計畫所得到的調查資料，可作為編製國民幸福指數
 的主觀評量結果。
 
-本計畫採分層多階段RDD-PPS隨機暨戶中抽樣法（random digit dialing using stratified multi-stage 
-probability proportionate to size (PPS), within household sampling），進行電話調查抽樣。
+本計畫採分層多階段RDD-PPS隨機暨戶中抽樣法（**_random digit dialing using stratified multi-stage 
+probability proportionate to size (PPS), within household sampling_**），進行電話調查抽樣。
 樣本抽取方式如下：第一階段抽樣時，先以臺灣二十二個縣市作為二十二個分層，根據行政院內政部提供的 
 2015 年 6 月人口統計資料計算臺灣二十二個縣市人口數，以等比例原則計算出各縣市所需抽取之人數（見表一）；
 接著，將各縣市電話局碼個別依使用量排序累加後，以等距抽樣原則於各縣市分別抽出中選局碼。
