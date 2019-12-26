@@ -5,7 +5,8 @@ library(devtools)
 library(readr)
 library(ggplot2)
 library(gganimate)
-
+library(magrittr)
+library("reshape2")
 #Import data
 {
 guess_encoding("dataset/data_rHDDA.csv", n_max = 1000)
@@ -40,3 +41,17 @@ ageOECD <- function(var_pos, dataset = nOECD, save = F){
 #for (k in 8 : 21) {
 #  ageOECD(k, save = T)
 #}
+
+#animated plot
+meanOECD <- aggregate(v7 ~ agegp, nOECD, mean, na.rm = T)
+meanOECD <- merge(aggregate(v20 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
+t_meanOECD <- reshape2::melt(meanOECD, id = "agegp")
+
+t_meanOECD %>%
+  ggplot(aes(x = agegp, y = value, color = variable)) +
+  geom_line(size = 1.2) + 
+  geom_point(size = 2) +
+  #geom_text(aes(label=c( "15-24 歲", "25-34 歲", "35-44 歲", "45-54 歲", "55-64 歲", "65 歲以上"))) +
+  ylim(c(0, 10)) +
+  transition_reveal(agegp) 
+  anim_save("images/age_to_v7-20.gif")
