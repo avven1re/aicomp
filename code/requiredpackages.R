@@ -1,6 +1,6 @@
 q <- askYesNo("Do you want to use pasckages of API?")
 
-if(q = T){
+if(q == T){
 #API required packages
 
 install.packages("jsonlite")
