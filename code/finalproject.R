@@ -1,6 +1,8 @@
 #encoding : UTF-8
 library(devtools)
-source_url("https://github.com/avven1re/aicomp/blob/master/code/requiredpackages.R?raw=True")
+#install.packages("readr")
+library(readr)
+
 #Import data
 
 guess_encoding("dataset/data_rHDDA.csv", n_max = 1000)
