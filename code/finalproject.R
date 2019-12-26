@@ -38,8 +38,10 @@ ageOECD <- function(var_pos, dataset = nOECD){
   return(pl)
 }
 
-ageOECD(10)
+#example
+#ageOECD(10)
 
+#畫多個圖且匯出
 #for (k in 8 : 21) {
 #  ageOECD(k)
 #}
