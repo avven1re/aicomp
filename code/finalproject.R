@@ -1,5 +1,5 @@
 #encoding : UTF-8
-
+library(devtools)
 source_url("https://github.com/avven1re/aicomp/blob/master/code/requiredpackages.R?raw=True")
 #Import data
 

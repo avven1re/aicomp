@@ -1,3 +1,6 @@
+q <- askYesNo("Do you want to use pasckages of API?")
+
+if(q = T){
 #API required packages
 
 install.packages("jsonlite")
@@ -16,7 +19,7 @@ library(devtools)
 
 #browseURL("https://github.com/Freguglia/rTwitchAPI)
 devtools::install_github("Freguglia/rTwitchAPI")
-library(rTwitchAPI)
+library(rTwitchAPI)}
 
 install.packages("readr")
 library(readr)
