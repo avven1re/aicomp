@@ -9,19 +9,13 @@ library(gganimate)
 #Import data
 {
 guess_encoding("dataset/data_rHDDA.csv", n_max = 1000)
-OECD <- read.csv("dataset/data_rHDDA.csv")
-names(OECD)[1] <- c("v1")
-names(OECD)
+nOECD <- read.csv("dataset/data_rHDDA.csv")
+names(nOECD)[1] <- c("v1")
+names(nOECD)
 }
 
 
 #animated plot
-tapply(nOECD$v7, nOECD$agegp, mean)
-v7 <- aggregate(OECD$v7 ~ OECD$agegp, OECD, mean)
-names(v7) <- c("agegp", "v7mean")
-nOECD <- merge(OECD, v7, by = "agegp")
-v7mean <-tapply(OECD$v7, OECD$agegp, mean, na.rm = T)
-mean(OECD$v7[OECD$agegp == 1])
 
 ageOECD <- function(var_pos, dataset = nOECD, save = F){
   for (i in var_pos) {
