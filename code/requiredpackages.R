@@ -18,4 +18,7 @@ library(devtools)
 devtools::install_github("Freguglia/rTwitchAPI")
 library(rTwitchAPI)
 
+install.packages("readr")
+library(readr)
+
 
