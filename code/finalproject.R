@@ -23,7 +23,7 @@ nOECD <- merge(OECD, v7, by = "agegp")
 v7mean <-tapply(OECD$v7, OECD$agegp, mean, na.rm = T)
 mean(OECD$v7[OECD$agegp == 1])
 
-ageOECD <- function(var_pos, dataset = nOECD){
+ageOECD <- function(var_pos, dataset = nOECD, save = F){
   for (i in var_pos) {
     pl <- ggplot(dataset, aes(x = dataset$agegp, y = dataset[, i], fill = dataset$agegp), na.rm = T) + geom_bar(stat = "summary", na.rm = T, fun.y = "mean") + 
       scale_fill_continuous(name="年齡分布", labels=c( "15-24 歲", "25-34 歲", "35-44 歲", "45-54 歲", "55-64 歲", "65 歲以上")) +
@@ -34,14 +34,15 @@ ageOECD <- function(var_pos, dataset = nOECD){
       ggtitle(paste0("年齡分布與", names(nOECD)[i]))  
     
   }
-  ggsave(paste0("images/age_with_", names(nOECD)[i], ".png"))
+  if(save == T){
+  ggsave(paste0("images/age_with_", names(nOECD)[i], ".png"))}
   return(pl)
 }
 
 #example
-#ageOECD(10)
+#ageOECD(10, save = T)
 
 #畫多個圖且匯出
 #for (k in 8 : 21) {
-#  ageOECD(k)
+#  ageOECD(k, save = T)
 #}
