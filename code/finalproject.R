@@ -29,13 +29,13 @@ ageOECD <- function(var_pos, dataset = nOECD, save = F){
       scale_fill_continuous(name="年齡分布", labels=c( "15-24 歲", "25-34 歲", "35-44 歲", "45-54 歲", "55-64 歲", "65 歲以上")) +
       #geom_text(aes(label = round(tapply(nOECD$v7, nOECD$agegp, mean, na.rm = T), 2)), vjust=1.6, size=5.5, color = "white")+
       xlab("年齡分布") + 
-      ylab(paste0(names(nOECD)[i], "mean"))+
+      ylab(paste0(names(dataset)[i], "mean"))+
       ylim(c(0, max(dataset[, i], na.rm = T))) +
-      ggtitle(paste0("年齡分布與", names(nOECD)[i]))  
+      ggtitle(paste0("年齡分布與", names(dataset)[i]))  
     
   }
   if(save == T){
-  ggsave(paste0("images/age_with_", names(nOECD)[i], ".png"))}
+  ggsave(paste0("images/age_with_", names(dataset)[i], ".png"))}
   return(pl)
 }
 
