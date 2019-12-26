@@ -92,3 +92,12 @@ probability proportionate to size (PPS), within household sampling_**），進�
 
 statistic_yyy(統計年)、site_id(區域別)、people_total(年底人口數)、area(土地面積)、population_density(人口密度)
 
+## 探索性資料分析
+### 1. 國民幸福指數調查暨主觀幸福感研究資料
+以問卷 **請問您昨天覺得快樂嗎？(v7)** 為例，用年齡層對於分數平均做分群結果如下(越接近10分越快樂)：
+![alt v7](https://github.com/avven1re/aicomp/blob/master/images/age_with_v7.png)
+可以看出所有年齡層的自我快樂評分皆落在平均7分左右，並沒有太大差異。
+
+但是以 **請問您昨天覺得沮喪嗎？(v9)** 來看(越接近10分越沮喪):
+![alt v9](https://github.com/avven1re/aicomp/blob/master/images/age_with_v9.png)
+可以看到年齡越高而有越沮喪的趨勢存在，但是沮喪分數平均值都沒有很高(約落在2.5左右)。
