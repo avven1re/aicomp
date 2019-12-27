@@ -102,3 +102,25 @@ ani_OECD <- t_meanOECD %>%
   
   animate(ani_OECD2, height = 500, width = 650)
   anim_save("images/age_to_v31-36.gif")
+  
+#animated plot 3 v37-v39
+  meanOECD3 <- aggregate(v37 ~ agegp, nOECD, mean, na.rm = T)
+  meanOECD3 <- merge(aggregate(v38 ~ agegp, nOECD, mean, na.rm = T), meanOECD3, by = "agegp")
+  meanOECD3 <- merge(aggregate(v39 ~ agegp, nOECD, mean, na.rm = T), meanOECD3, by = "agegp")
+  t_meanOECD3 <- reshape2::melt(meanOECD3, id = "agegp")
+  
+  ani_OECD3 <- t_meanOECD3 %>%
+    ggplot(aes(x = agegp, y = value, color = variable)) +
+    geom_line(size = 1.2) + 
+    geom_point(size = 2) +
+    scale_color_discrete(name = "問卷題目(高到低:1到4分)", labels = rev(c("請問您滿不滿意您在我國所擁有的民主生活？", "請問您滿不滿意我國的言論自由?", 
+                                                                 "政府官員會重視我們一般老百姓的想法，是否同意?"))) +
+    xlab("年齡分布") +
+    ylab("平均值") +
+    scale_x_discrete(limits = 1 : 6, labels= c( "15-24 歲", "25-34 歲", "35-44 歲", "45-54 歲", "55-64 歲", "65 歲以上")) +
+    theme(axis.text.x = element_text(angle = 45), axis.text=element_text(size = 18)) +
+    ylim(c(4, 0)) +
+    transition_reveal(agegp) 
+  
+  animate(ani_OECD3, height = 500, width = 650)
+  anim_save("images/age_to_v37-39.gif")
