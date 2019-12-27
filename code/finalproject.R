@@ -214,3 +214,45 @@ ani_OECD <- t_meanOECD %>%
   
   animate(ani_OECD6, height = 500, width = 650)
   anim_save("images/edu_to_v37-39.gif")
+  
+  
+#animated plot (by income)
+  #animated plot 4 v7-v20
+  meanOECD7 <- aggregate(v7 ~ vI1, nOECD, mean, na.rm = T)
+  meanOECD7 <- merge(aggregate(v8 ~ vI1, nOECD, mean, na.rm = T), meanOECD7, by = "vI1")
+  meanOECD7 <- merge(aggregate(v9 ~ vI1, nOECD, mean, na.rm = T), meanOECD7, by = "vI1")
+  meanOECD7 <- merge(aggregate(v10 ~ vI1, nOECD, mean, na.rm = T), meanOECD7, by = "vI1")
+  meanOECD7 <- merge(aggregate(v11 ~ vI1, nOECD, mean, na.rm = T), meanOECD7, by = "vI1")
+  meanOECD7 <- merge(aggregate(v12 ~ vI1, nOECD, mean, na.rm = T), meanOECD7, by = "vI1")
+  meanOECD7 <- merge(aggregate(v13 ~ vI1, nOECD, mean, na.rm = T), meanOECD7, by = "vI1")
+  meanOECD7 <- merge(aggregate(v14 ~ vI1, nOECD, mean, na.rm = T), meanOECD7, by = "vI1")
+  meanOECD7 <- merge(aggregate(v15 ~ vI1, nOECD, mean, na.rm = T), meanOECD7, by = "vI1")
+  meanOECD7 <- merge(aggregate(v16 ~ vI1, nOECD, mean, na.rm = T), meanOECD7, by = "vI1")
+  meanOECD7 <- merge(aggregate(v17 ~ vI1, nOECD, mean, na.rm = T), meanOECD7, by = "vI1")
+  meanOECD7 <- merge(aggregate(v18 ~ vI1, nOECD, mean, na.rm = T), meanOECD7, by = "vI1")
+  meanOECD7 <- merge(aggregate(v19 ~ vI1, nOECD, mean, na.rm = T), meanOECD7, by = "vI1")
+  meanOECD7 <- merge(aggregate(v20 ~ vI1, nOECD, mean, na.rm = T), meanOECD7, by = "vI1")
+  t_meanOECD7 <- reshape2::melt(meanOECD7, id = "vI1")
+  
+  ani_OECD7 <- t_meanOECD7 %>%
+    ggplot(aes(x = vI1, y = value, color = variable)) +
+    geom_line(size = 1.2) + 
+    geom_point(size = 2) +
+    scale_color_discrete(name = "問卷題目(1到10分)", labels = rev(c("請問您昨天覺得快樂嗎？", "請問您昨天覺得擔憂嗎？", "請問您昨天覺得沮喪嗎？", 
+                                                              "您對於目前生活的滿意程度", "對於人生當中所有做過的事情值得嗎?", "您對自己生活水準的滿意程度", 
+                                                              "對自己健康狀況", "對自己人生的成就", "對自己的人際關係", "請問您對自己安全感受的滿意程度", 
+                                                              "您對自己歸屬於社區一份子的滿意程度", "對自己未來生活的保障", 
+                                                              "請問您對可以做自己喜歡事情的時間長短", "您對居住地區環境品質的滿意程度"))) +
+    xlab("收入分布") +
+    ylab("平均值") +
+    scale_x_discrete(limits =c(0, 5, 15, 25, 35, 45, 55, 65, 75, 85, 95, 125, 175, 250, 350), labels= c( "無收入", "1萬元以內", "1到2萬元", "2到3萬元", "3到4萬元", "4到5萬元", 
+                                                 "5到6萬元", "6到7萬元", "7到8萬元", "8到9萬元", "9到10萬元", "10到15萬元", 
+                                                 "15到20萬元", "20到30萬元", "30萬元以上")) +
+    theme(axis.text.x = element_text(angle = 90), axis.text=element_text(size = 10)) +
+    ylim(c(0, 10)) +
+    ggtitle("社會聯繫與生活層面滿意度") +
+    transition_reveal(vI1) 
+  
+  animate(ani_OECD7, height = 500, width = 900)
+  anim_save("images/inc_to_v7-20.gif")
+  
