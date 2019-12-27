@@ -44,6 +44,18 @@ ageOECD <- function(var_pos, dataset = nOECD, save = F){
 
 #animated plot
 meanOECD <- aggregate(v7 ~ agegp, nOECD, mean, na.rm = T)
+meanOECD <- merge(aggregate(v8 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
+meanOECD <- merge(aggregate(v9 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
+meanOECD <- merge(aggregate(v10 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
+meanOECD <- merge(aggregate(v11 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
+meanOECD <- merge(aggregate(v12 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
+meanOECD <- merge(aggregate(v13 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
+meanOECD <- merge(aggregate(v14 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
+meanOECD <- merge(aggregate(v15 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
+meanOECD <- merge(aggregate(v16 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
+meanOECD <- merge(aggregate(v17 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
+meanOECD <- merge(aggregate(v18 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
+meanOECD <- merge(aggregate(v19 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
 meanOECD <- merge(aggregate(v20 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
 t_meanOECD <- reshape2::melt(meanOECD, id = "agegp")
 
@@ -59,9 +71,9 @@ ani_OECD <- t_meanOECD %>%
   xlab("年齡分布") +
   ylab("平均值") +
   scale_x_discrete(limits = 1 : 6, labels= c( "15-24 歲", "25-34 歲", "35-44 歲", "45-54 歲", "55-64 歲", "65 歲以上")) +
-  theme(axis.text.x = element_text(angle = 45), axis.text=element_text(size = 20)) +
+  theme(axis.text.x = element_text(angle = 45), axis.text=element_text(size = 18)) +
   ylim(c(0, 10)) +
   transition_reveal(agegp) 
 
-  animate(ani_OECD, height = 800, width = 1200)
+  animate(ani_OECD, height = 500, width = 800)
   anim_save("images/age_to_v7-20.gif")
