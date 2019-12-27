@@ -47,7 +47,7 @@ meanOECD <- aggregate(v7 ~ agegp, nOECD, mean, na.rm = T)
 meanOECD <- merge(aggregate(v20 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
 t_meanOECD <- reshape2::melt(meanOECD, id = "agegp")
 
-t_meanOECD %>%
+ani_OECD <- t_meanOECD %>%
   ggplot(aes(x = agegp, y = value, color = variable)) +
   geom_line(size = 1.2) + 
   geom_point(size = 2) +
@@ -62,4 +62,6 @@ t_meanOECD %>%
   theme(axis.text.x = element_text(angle = 45)) +
   ylim(c(0, 10)) +
   transition_reveal(agegp) 
+
+  animate(ani_OECD, height = 800, width =800)
   anim_save("images/age_to_v7-20.gif")
