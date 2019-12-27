@@ -97,7 +97,7 @@ ani_OECD <- t_meanOECD %>%
     ylab("平均值") +
     scale_x_discrete(limits = 1 : 6, labels= c( "15-24 歲", "25-34 歲", "35-44 歲", "45-54 歲", "55-64 歲", "65 歲以上")) +
     theme(axis.text.x = element_text(angle = 45), axis.text=element_text(size = 18)) +
-    ylim(c(0, 4)) +
+    ylim(c(4, 0)) +
     transition_reveal(agegp) 
   
   animate(ani_OECD2, height = 500, width = 650)
