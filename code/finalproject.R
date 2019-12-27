@@ -150,7 +150,7 @@ ani_OECD <- t_meanOECD %>%
     ggplot(aes(x = edugp, y = value, color = variable)) +
     geom_line(size = 1.2) + 
     geom_point(size = 2) +
-    scale_color_discrete(name = "問卷題目(1到10分)", labels = rev(c("請問您昨天覺得快樂嗎？", "請問您昨天覺得擔憂嗎？", "請問您昨天覺得沮喪嗎？", 
+    scale_color_discrete(name = "問卷題目(滿意度低到高1到10分)", labels = rev(c("請問您昨天覺得快樂嗎？", "請問您昨天覺得擔憂嗎？", "請問您昨天覺得沮喪嗎？", 
                                                               "您對於目前生活的滿意程度", "對於人生當中所有做過的事情值得嗎?", "您對自己生活水準的滿意程度", 
                                                               "對自己健康狀況", "對自己人生的成就", "對自己的人際關係", "請問您對自己安全感受的滿意程度", 
                                                               "您對自己歸屬於社區一份子的滿意程度", "對自己未來生活的保障", 
