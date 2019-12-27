@@ -75,5 +75,5 @@ ani_OECD <- t_meanOECD %>%
   ylim(c(0, 10)) +
   transition_reveal(agegp) 
 
-  animate(ani_OECD, height = 500, width = 800)
+  animate(ani_OECD, height = 500, width = 650)
   anim_save("images/age_to_v7-20.gif")
