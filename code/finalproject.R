@@ -283,3 +283,28 @@ ani_OECD <- t_meanOECD %>%
   
   animate(ani_OECD8, height = 500, width = 900)
   anim_save("images/inc_to_v31-36.gif")
+  
+#animated plot 6 v37-v39
+  meanOECD9 <- aggregate(v37 ~ vI1, nOECD, mean, na.rm = T)
+  meanOECD9 <- merge(aggregate(v38 ~ vI1, nOECD, mean, na.rm = T), meanOECD9, by = "vI1")
+  meanOECD9 <- merge(aggregate(v39 ~ vI1, nOECD, mean, na.rm = T), meanOECD9, by = "vI1")
+  t_meanOECD9 <- reshape2::melt(meanOECD9, id = "vI1")
+  
+  ani_OECD6 <- t_meanOECD9 %>%
+    ggplot(aes(x = vI1, y = value, color = variable)) +
+    geom_line(size = 1.2) + 
+    geom_point(size = 2) +
+    scale_color_discrete(name = "問卷題目(信任度高到低:1到4分)", labels = rev(c("請問您滿不滿意您在我國所擁有的民主生活？", "請問您滿不滿意我國的言論自由?", 
+                                                                    "政府官員會重視我們一般老百姓的想法，是否同意?"))) +
+    xlab("收入分布") +
+    ylab("平均值") +
+    scale_x_discrete(limits =c(0, 5, 15, 25, 35, 45, 55, 65, 75, 85, 95, 125, 175, 250, 350), labels= c( "無收入", "1萬元以內", "1到2萬元", "2到3萬元", "3到4萬元", "4到5萬元", 
+                                                                                                         "5到6萬元", "6到7萬元", "7到8萬元", "8到9萬元", "9到10萬元", "10到15萬元", 
+                                                                                                         "15到20萬元", "20到30萬元", "30萬元以上")) +
+    theme(axis.text.x = element_text(angle = 90), axis.text=element_text(size = 10)) +
+    ylim(c(4, 0)) +
+    ggtitle("國家情勢信任程度") + 
+    transition_reveal(vI1) 
+  
+  animate(ani_OECD6, height = 500, width = 900)
+  anim_save("images/inc_to_v37-39.gif")
