@@ -42,7 +42,7 @@ ageOECD <- function(var_pos, dataset = nOECD, save = F){
 #  ageOECD(k, save = T)
 #}
 
-#animated plot
+#animated plot v7-v20
 meanOECD <- aggregate(v7 ~ agegp, nOECD, mean, na.rm = T)
 meanOECD <- merge(aggregate(v8 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
 meanOECD <- merge(aggregate(v9 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
@@ -77,3 +77,28 @@ ani_OECD <- t_meanOECD %>%
 
   animate(ani_OECD, height = 500, width = 650)
   anim_save("images/age_to_v7-20.gif")
+
+#animated plot 2 v31-v36
+  meanOECD2 <- aggregate(v31 ~ agegp, nOECD, mean, na.rm = T)
+  meanOECD2 <- merge(aggregate(v32 ~ agegp, nOECD, mean, na.rm = T), meanOECD2, by = "agegp")
+  meanOECD2 <- merge(aggregate(v33 ~ agegp, nOECD, mean, na.rm = T), meanOECD2, by = "agegp")
+  meanOECD2 <- merge(aggregate(v34 ~ agegp, nOECD, mean, na.rm = T), meanOECD2, by = "agegp")
+  meanOECD2 <- merge(aggregate(v35 ~ agegp, nOECD, mean, na.rm = T), meanOECD2, by = "agegp")
+  meanOECD2 <- merge(aggregate(v36 ~ agegp, nOECD, mean, na.rm = T), meanOECD2, by = "agegp")
+  t_meanOECD2 <- reshape2::melt(meanOECD2, id = "agegp")
+  
+  ani_OECD2 <- t_meanOECD2 %>%
+    ggplot(aes(x = agegp, y = value, color = variable)) +
+    geom_line(size = 1.2) + 
+    geom_point(size = 2) +
+    scale_color_discrete(name = "問卷題目(高到低:1到4分)", labels = rev(c("請問您對立法院信任或不信任？", "對司法制度及法院?", "對其他的中央政府?", 
+                                                             "對您居住地區的地方政府?", "對媒體的品質及公正性?", "請問您對我國的社會保障制度信不信任？"))) +
+    xlab("年齡分布") +
+    ylab("平均值") +
+    scale_x_discrete(limits = 1 : 6, labels= c( "15-24 歲", "25-34 歲", "35-44 歲", "45-54 歲", "55-64 歲", "65 歲以上")) +
+    theme(axis.text.x = element_text(angle = 45), axis.text=element_text(size = 18)) +
+    ylim(c(0, 4)) +
+    transition_reveal(agegp) 
+  
+  animate(ani_OECD2, height = 500, width = 650)
+  anim_save("images/age_to_v31-36.gif")
