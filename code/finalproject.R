@@ -16,7 +16,7 @@ names(nOECD)
 }
 
 
-#animated plot
+#animated plot (by age)
 
 ageOECD <- function(var_pos, dataset = nOECD, save = F){
   for (i in var_pos) {
@@ -124,3 +124,6 @@ ani_OECD <- t_meanOECD %>%
   
   animate(ani_OECD3, height = 500, width = 650)
   anim_save("images/age_to_v37-39.gif")
+  
+#animated plot (by edu)
+  
