@@ -59,7 +59,7 @@ ani_OECD <- t_meanOECD %>%
   xlab("年齡分布") +
   ylab("平均值") +
   scale_x_discrete(limits = 1 : 6, labels= c( "15-24 歲", "25-34 歲", "35-44 歲", "45-54 歲", "55-64 歲", "65 歲以上")) +
-  theme(axis.text.x = element_text(angle = 45)) +
+  theme(axis.text.x = element_text(angle = 45), axis.text=element_text(size = 20)) +
   ylim(c(0, 10)) +
   transition_reveal(agegp) 
 
