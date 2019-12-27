@@ -102,6 +102,6 @@ statistic_yyy(統計年)、site_id(區域別)、people_total(年底人口數)、
 ![alt v9](https://github.com/avven1re/aicomp/blob/master/images/age_with_v9.png)
 可以看到年齡越高而有越沮喪的趨勢存在，但是沮喪分數平均值都沒有很高(約落在2.5左右)。
 
-以下是綜合v7到v20的年齡層走勢圖:
+以下是綜合**社會聯繫與生活層面滿意度**的年齡層走勢圖:
 
 ![alt gif](https://github.com/avven1re/aicomp/blob/master/images/age_to_v7-20.gif)
