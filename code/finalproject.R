@@ -217,7 +217,7 @@ ani_OECD <- t_meanOECD %>%
   
   
 #animated plot (by income)
-  #animated plot 4 v7-v20
+  #animated plot 7 v7-v20
   meanOECD7 <- aggregate(v7 ~ vI1, nOECD, mean, na.rm = T)
   meanOECD7 <- merge(aggregate(v8 ~ vI1, nOECD, mean, na.rm = T), meanOECD7, by = "vI1")
   meanOECD7 <- merge(aggregate(v9 ~ vI1, nOECD, mean, na.rm = T), meanOECD7, by = "vI1")
@@ -255,4 +255,31 @@ ani_OECD <- t_meanOECD %>%
   
   animate(ani_OECD7, height = 500, width = 900)
   anim_save("images/inc_to_v7-20.gif")
+
+#animated plot 8 v31-v36
+  meanOECD8 <- aggregate(v31 ~ vI1, nOECD, mean, na.rm = T)
+  meanOECD8 <- merge(aggregate(v32 ~ vI1, nOECD, mean, na.rm = T), meanOECD8, by = "vI1")
+  meanOECD8 <- merge(aggregate(v33 ~ vI1, nOECD, mean, na.rm = T), meanOECD8, by = "vI1")
+  meanOECD8 <- merge(aggregate(v34 ~ vI1, nOECD, mean, na.rm = T), meanOECD8, by = "vI1")
+  meanOECD8 <- merge(aggregate(v35 ~ vI1, nOECD, mean, na.rm = T), meanOECD8, by = "vI1")
+  meanOECD8 <- merge(aggregate(v36 ~ vI1, nOECD, mean, na.rm = T), meanOECD8, by = "vI1")
+  t_meanOECD8 <- reshape2::melt(meanOECD8, id = "vI1")
   
+  ani_OECD8 <- t_meanOECD8 %>%
+    ggplot(aes(x = vI1, y = value, color = variable)) +
+    geom_line(size = 1.2) + 
+    geom_point(size = 2) +
+    scale_color_discrete(name = "問卷題目(信任度高到低:1到4分)", labels = rev(c("請問您對立法院信任或不信任？", "對司法制度及法院?", "對其他的中央政府?", 
+                                                                    "對您居住地區的地方政府?", "對媒體的品質及公正性?", "請問您對我國的社會保障制度信不信任？"))) +
+    xlab("收入分布") +
+    ylab("平均值") +
+    scale_x_discrete(limits =c(0, 5, 15, 25, 35, 45, 55, 65, 75, 85, 95, 125, 175, 250, 350), labels= c( "無收入", "1萬元以內", "1到2萬元", "2到3萬元", "3到4萬元", "4到5萬元", 
+                                                                                                         "5到6萬元", "6到7萬元", "7到8萬元", "8到9萬元", "9到10萬元", "10到15萬元", 
+                                                                                                         "15到20萬元", "20到30萬元", "30萬元以上")) +
+    theme(axis.text.x = element_text(angle = 90), axis.text=element_text(size = 10)) +
+    ylim(c(4, 0)) +
+    ggtitle("政府機構信任程度") + 
+    transition_reveal(vI1) 
+  
+  animate(ani_OECD8, height = 500, width = 900)
+  anim_save("images/inc_to_v31-36.gif")
