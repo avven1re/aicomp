@@ -40,7 +40,7 @@ ani_OECD <- t_meanOECD[1 : 84, ] %>%
   ggplot(aes(x = agegp, y = value, color = variable)) +
   geom_bar(t_meanOECD[85 : 90, ], mapping = aes(x = agegp, y = value/sum(value) * 10, fill = agegp), stat = "identity") +
   geom_line(size = 1.2) + 
-  geom_point(size = 2) +
+  geom_point(t_meanOECD[1 : 84, ], mapping = aes(x = agegp, y = value), size = 2) +
   scale_color_discrete(name = "問卷題目(滿意度低到高1到10分)", labels = rev(c("請問您昨天覺得快樂嗎？", "請問您昨天覺得擔憂嗎？", "請問您昨天覺得沮喪嗎？", 
                                                                   "您對於目前生活的滿意程度", "對於人生當中所有做過的事情值得嗎?", "您對自己生活水準的滿意程度", 
                                                                   "對自己健康狀況", "對自己人生的成就", "對自己的人際關係", "請問您對自己安全感受的滿意程度", 
@@ -56,7 +56,7 @@ ani_OECD <- t_meanOECD[1 : 84, ] %>%
   ggtitle("社會聯繫與生活層面滿意度") +
   transition_reveal(agegp) 
 
-animate(ani_OECD, height = 500, width = 650)
+animate(ani_OECD, height = 500, width = 650, end_pause = 15)
 anim_save("images/age_to_v7-20_ver2.gif")
 
 #animated plot 2 v31-v36
