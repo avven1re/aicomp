@@ -56,7 +56,7 @@ ani_OECD <- t_meanOECD[1 : 84, ] %>%
   transition_reveal(agegp) 
 
 animate(ani_OECD, height = 500, width = 650)
-anim_save("images/age_to_v7-20.gif")
+#anim_save("images/age_to_v7-20.gif")
 
 #animated plot 2 v31-v36
 meanOECD2 <- aggregate(v31 ~ agegp, nOECD, mean, na.rm = T)
