@@ -20,6 +20,7 @@ library("reshape2")
 
 #animated plot v7-v20
 meanOECD <- aggregate(v7 ~ agegp, nOECD, mean, na.rm = T)
+meanOECD <- cbind(meanOECD, table(nOECD$agegp))[, -3]
 meanOECD <- merge(aggregate(v8 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
 meanOECD <- merge(aggregate(v9 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
 meanOECD <- merge(aggregate(v10 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
@@ -35,8 +36,9 @@ meanOECD <- merge(aggregate(v19 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by =
 meanOECD <- merge(aggregate(v20 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
 t_meanOECD <- reshape2::melt(meanOECD, id = "agegp")
 
-ani_OECD <- t_meanOECD %>%
+ani_OECD <- t_meanOECD[1 : 84, ] %>%
   ggplot(aes(x = agegp, y = value, color = variable)) +
+  geom_bar(t_meanOECD[85 : 90, ], mapping = aes(x = agegp, y = value/sum(value) * 10, fill = agegp), stat = "identity", na.rm = T) +
   geom_line(size = 1.2) + 
   geom_point(size = 2) +
   scale_color_discrete(name = "問卷題目(滿意度低到高1到10分)", labels = rev(c("請問您昨天覺得快樂嗎？", "請問您昨天覺得擔憂嗎？", "請問您昨天覺得沮喪嗎？", 
@@ -48,7 +50,8 @@ ani_OECD <- t_meanOECD %>%
   ylab("平均值") +
   scale_x_discrete(limits = 1 : 6, labels= c( "15-24 歲", "25-34 歲", "35-44 歲", "45-54 歲", "55-64 歲", "65 歲以上")) +
   theme(axis.text.x = element_text(angle = 45), axis.text=element_text(size = 18)) +
-  ylim(c(0, 10)) +
+  #ylim(c(0, 10)) +
+  scale_y_continuous(limits = c(0, 10), sec.axis = sec_axis(~. *10, name = "人數百分比")) +
   ggtitle("社會聯繫與生活層面滿意度") +
   transition_reveal(agegp) 
 
