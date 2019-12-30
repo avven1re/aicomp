@@ -105,3 +105,8 @@ statistic_yyy(統計年)、site_id(區域別)、people_total(年底人口數)、
 以下是綜合**社會聯繫與生活層面滿意度**的年齡層走勢圖:
 
 ![alt gif](https://github.com/avven1re/aicomp/blob/master/images/age_to_v7-20.gif)
+
+圖中可以看到**昨天覺得沮喪**與**昨天覺得擔憂**兩項分數隨著年齡增加而有著上升的趨勢。  
+接著再來看**政治機構信任程度**的年齡層走勢圖:
+
+![alt gif](https://github.com/avven1re/aicomp/blob/master/images/age_to_v31-36.gif)
