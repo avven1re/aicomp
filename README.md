@@ -92,6 +92,11 @@ probability proportionate to size (PPS), within household sampling_**），進�
 
 statistic_yyy(統計年)、site_id(區域別)、people_total(年底人口數)、area(土地面積)、population_density(人口密度)
 
+## 資料整併
+### 1.各種土地使用比率（%）
+土地使用資料採自105-106年國土利用調查成果鄉鎮市區統計資料，國土面積採自105年各鄉鎮市區人口密度。由於本研究是以「鄉鎮市區」為基本單位、全台灣為範圍，故我們以鄉鎮市區為單位的各種土地使用面積（公頃）作為主要解釋變數。之後將其除以各鄉鎮市區資料中「該地國土面積」變項（整併後以縣市為單位），得到以縣市為單位的國土面積（平方公里），透過下方算式得到公園綠地使用比率（%）。
+![alt v7](https://github.com/avven1re/aicomp/blob/master/images/age_with_v7.png)
+
 ## 探索性資料分析
 ### 1. 國民幸福指數調查暨主觀幸福感研究資料
 
