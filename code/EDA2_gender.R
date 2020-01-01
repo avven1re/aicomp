@@ -47,27 +47,22 @@ for (i in 1 : length(t_meanOECD10[, 1])) {
 t_meanOECD10 <- as.data.frame(cbind(sex, t_meanOECD10[, 2 : 3]))
 write.csv(t_meanOECD10, file = "dataset/sex_to_v7-v20.csv")
 
-ani_OECD10 <- t_meanOECD10 %>%
-  ggplot(aes(x = sexgp, y = value, color = variable)) +
-  geom_line(size = 1.2) + 
-  geom_point(size = 2) +
-  scale_color_discrete(name = "?ݨ??D??(???N?קC?찪1??10??)", labels = rev(c("?аݱz?Q??ı?o?ֶּܡH", "?аݱz?Q??ı?o???~?ܡH", "?аݱz?Q??ı?o?q???ܡH", 
-                                                                  "?z?????ثe?ͬ??????N?{??", "?????H?ͷ���?Ҧ????L???Ʊ??ȱo???", "?z???ۤv?ͬ????Ǫ????N?{??", 
-                                                                  "???ۤv???d???p", "???ۤv?H?ͪ????N", "???ۤv???H?????Y", "?аݱz???ۤv?w???P???????N?{??", 
-                                                                  "?z???ۤv?k?ݩ??��Ϥ@???l?????N?{??", "???ۤv???ӥͬ????O??", 
-                                                                  "?аݱz???i?H???ۤv???w?Ʊ????ɶ????u", "?z???~???a?????ҫ~?誺???N?{??"))) +
-  xlab("?~?֤��?") +
-  ylab("??????") +
-  scale_x_discrete(limits = 1 : 6, labels= c("?k", "?k")) +
-  theme(axis.text.x = element_text(angle = 0), axis.text=element_text(size = 18)) +
-  ylim(c(0, 10)) +
-  ggtitle("?��|?pô?P?ͬ??h?????N??") +
-  transition_reveal(sexgp) 
-
-animate(ani_OECD10, height = 500, width = 650, end_pause = 30)
-anim_save("images/sex_to_v7-20.gif")
-
 #
-t_meanOECD10 %>%
-  ggplot(aes(x = sexgp, y = value)) +
-  geom_bar(t_meanOECD10, stat = "identity", mapping = aes( y = value ,fill = variable, group = sexgp))
+meanOECD11 <- aggregate(v31 ~ sexgp, nOECD, mean, na.rm = T)
+meanOECD11 <- merge(aggregate(v32 ~ sexgp, nOECD, mean, na.rm = T), meanOECD11, by = "sexgp")
+meanOECD11 <- merge(aggregate(v33 ~ sexgp, nOECD, mean, na.rm = T), meanOECD11, by = "sexgp")
+meanOECD11 <- merge(aggregate(v34 ~ sexgp, nOECD, mean, na.rm = T), meanOECD11, by = "sexgp")
+meanOECD11 <- merge(aggregate(v35 ~ sexgp, nOECD, mean, na.rm = T), meanOECD11, by = "sexgp")
+meanOECD11 <- merge(aggregate(v36 ~ sexgp, nOECD, mean, na.rm = T), meanOECD11, by = "sexgp")
+t_meanOECD11 <- reshape2::melt(meanOECD11, id = "sexgp")
+sex <- NaN
+for (i in 1 : length(t_meanOECD11[, 1])) {
+  if(t_meanOECD11[i, 1] == 1){
+    sex[i] <- c("M")
+  }
+  else {
+    sex[i] <- c("F")
+  }
+}
+t_meanOECD11 <- as.data.frame(cbind(sex, t_meanOECD11[, 2 : 3]))
+write.csv(t_meanOECD11, file = "dataset/sex_to_v31-v36.csv")
