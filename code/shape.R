@@ -7,20 +7,22 @@ library(viridis);library(fieldss)
 # dataB = dataA[sample(nrow(dataA),50),]
 # set.seed(200)
 # dataC = dataA[sample(nrow(dataA),20),]
-ques = read.csv("data/Happiness.csv")
+ques <- read.csv("dataset/Happiness.csv")
 head(ques)
 # land data
-ld1=read.csv("data/landdata.csv", skip=1, header=F, fileEncoding = "UTF-8-BOM")
+ld1 <- read.csv("dataset/landdata.csv", skip=1, header=F, fileEncoding = "UTF-8-BOM")
 head(ld1)
 # 鄉鎮分布
-taiwan.town.map <- st_read("data/town/TOWN_MOI_1070205.shp")
+taiwan.town.map <- st_read("dataset/town/TOWN_MOI_1070205.shp")
 head(taiwan.town.map)
 twplt <- ggplot(data = taiwan.town.map) +
   geom_sf(aes(fill = TOWNNAME), show.legend= F) +
 #  geom_sf_text(aes(label = TOWNNAME), size = 3) +
   labs(title = "台灣行政區圖")
 twplt
+
 ntw.map <- taiwan.town.map[c("TOWNNAME", "geometry", "TOWNCODE")]
+
 head(ntw.map)
 mode(taiwan.town.map)
 town <- cbind(as.vector(taiwan.town.map$TOWNNAME),as.vector(taiwan.town.map$TOWNCODE))
@@ -28,7 +30,7 @@ head(town)
 # townf <- cbind(as.vector(taiwan.town.map$TOWNNAME),as.vector(taiwan.town.map$TOWNCODE),taiwan.town.map$geometry)
 # head(townf)
 # 地圖與土地資料合併
-truemap <- left_join(ntw.map, ld1,
+truemap <- dplyr::left_join(ntw.map, ld1,
               by= c("TOWNNAME"= "V3"))
 head(truemap)
 class(truemap)
@@ -46,8 +48,11 @@ plt1 <- ggplot(data = truemap) +
   labs(title="分佈圖", x ="經度", y = "緯度")
 plt1
 
+##############################
 
 head(ques)
 class(ques$v4)
 
 final.dat <- left_join(ques, truemap, by= c("t"="TOWNCODE"))
+
+class(final.dat)
