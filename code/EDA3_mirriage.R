@@ -91,6 +91,7 @@ ani_OECD15 <- t_meanOECD15 %>%
   ggplot(aes(x = v41, y = value, color = variable)) +
   geom_line(size = 1.2) + 
   geom_point(size = 2) +
+  #geom_area() +
   scale_color_discrete(name = "問卷題目(信任度高到低:1到4分)", labels = rev(c("請問您滿不滿意您在我國所擁有的民主生活？", "請問您滿不滿意我國的言論自由?", 
                                                                   "政府官員會重視我們一般老百姓的想法，是否同意?"))) +
   xlab("婚姻狀態") +
