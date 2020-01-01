@@ -66,3 +66,20 @@ for (i in 1 : length(t_meanOECD11[, 1])) {
 }
 t_meanOECD11 <- as.data.frame(cbind(sex, t_meanOECD11[, 2 : 3]))
 write.csv(t_meanOECD11, file = "dataset/sex_to_v31-v36.csv")
+
+#
+meanOECD12 <- aggregate(v37 ~ agegp, nOECD, mean, na.rm = T)
+meanOECD12 <- merge(aggregate(v38 ~ agegp, nOECD, mean, na.rm = T), meanOECD12, by = "agegp")
+meanOECD12 <- merge(aggregate(v39 ~ agegp, nOECD, mean, na.rm = T), meanOECD12, by = "agegp")
+t_meanOECD12 <- reshape2::melt(meanOECD12, id = "agegp")
+sex <- NaN
+for (i in 1 : length(t_meanOECD12[, 1])) {
+  if(t_meanOECD12[i, 1] == 1){
+    sex[i] <- c("M")
+  }
+  else {
+    sex[i] <- c("F")
+  }
+}
+t_meanOECD12 <- as.data.frame(cbind(sex, t_meanOECD12[, 2 : 3]))
+write.csv(t_meanOECD12, file = "dataset/sex_to_v37-v39.csv")
