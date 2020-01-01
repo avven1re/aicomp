@@ -15,21 +15,10 @@ ld2 <- ld1[-1]
 names(ld2) <- c("county","town",paste('x',1:64,sep=''))
 head(ld2)
 
-<<<<<<< HEAD
-# ??????
-taiwan.town.map <- st_read("data/town/TOWN_MOI_1070205.shp")
-head(taiwan.town.map)
-# twplt <- ggplot(data = taiwan.town.map) +
-#   geom_sf(aes(fill = TOWNNAME), show.legend= F) +
-# #  geom_sf_text(aes(label = TOWNNAME), size = 3) +
-#   labs(title = "??銵?????")
-# twplt
-=======
 # 鄉鎮分區
 taiwan.town.map <- st_read("data/town/TOWN_MOI_1070205.shp")
 head(taiwan.town.map)
 
->>>>>>> 27c72bda156ca5f43996b2306321d0dbba00ace5
 ntw.map <- taiwan.town.map[c("TOWNNAME", "geometry", "TOWNCODE")]
 head(ntw.map)
 # mode(taiwan.town.map)
@@ -37,43 +26,19 @@ head(ntw.map)
 # town <- as.data.frame(taiwan.town.map[c("TOWNNAME", "TOWNCODE")])
 # head(town)
 
-<<<<<<< HEAD
-# townf <- cbind(as.vector(taiwan.town.map$TOWNNAME),as.vector(taiwan.town.map$TOWNCODE),taiwan.town.map$geometry)
-# head(townf)
-# ?????鞈??蔥
-=======
 # 將土地的資料合併
->>>>>>> 27c72bda156ca5f43996b2306321d0dbba00ace5
 truemap <- left_join(ntw.map, ld2,
-              by= c("TOWNNAME"= "town"))
+                     by= c("TOWNNAME"= "town"))
 head(truemap)
 class(truemap)
 
-<<<<<<< HEAD
-# ?????
-plt1 <- ggplot(data = truemap) +
-  geom_sf(aes(fill = V13/V4)) +
-#  geom_sf_text(aes(label = TOWNNAME), size = 3) +
-  #scale_fill_distiller(palette = "Spectral", name = "鈭箏(?)") +
-  #scale_fill_gradientn(colours = tim.colors(22), name = "鈭箏(?)") +
-  #scale_fill_viridis(name = "鈭箏(?)") +
-  #scale_fill_distiller(palette = "YlOrRd", name = "鈭箏(?)") +
-  scale_fill_distiller(palette = "YlGn", direction = 1, name = "?????") +
-  labs(title="?????", x ="蝬漲", y = "蝺臬漲")
-plt1
-=======
 # 畫圖
 # plt1 <- ggplot(data = truemap) +
 #   geom_sf(aes(fill = V13/V4)) +
 # #  geom_sf_text(aes(label = TOWNNAME), size = 3) +
-#   #scale_fill_distiller(palette = "Spectral", name = "人口(???)") +
-#   #scale_fill_gradientn(colours = tim.colors(22), name = "人口(???)") +
-#   #scale_fill_viridis(name = "人口(???)") +
-#   #scale_fill_distiller(palette = "YlOrRd", name = "人口(???)") +
-#   scale_fill_distiller(palette = "YlGn", direction = 1, name = "?????????") +
-#   labs(title="?????????", x ="經度", y = "緯度")
+#   scale_fill_distiller(palette = "YlGn", direction = 1, name = "闊葉林") +
+#   labs(title="分布圖", x ="經度", y = "緯度")
 # plt1
->>>>>>> 27c72bda156ca5f43996b2306321d0dbba00ace5
 
 
 # final.dat <- left_join(ques, truemap, by= c("t"="TOWNCODE"))
