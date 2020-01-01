@@ -1,4 +1,4 @@
-#encoding : UTF-8
+#encoding : CP950
 #packages
 library(devtools)
 #install.packages("readr")
