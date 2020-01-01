@@ -76,7 +76,7 @@ ani_OECD <- t_meanOECD %>%
   ggtitle("社會聯繫與生活層面滿意度") +
   transition_reveal(agegp) 
 
-  animate(ani_OECD, height = 500, width = 650)
+  animate(ani_OECD, height = 500, width = 650, end_pause = 30)
   anim_save("images/age_to_v7-20.gif")
 
 #animated plot 2 v31-v36
