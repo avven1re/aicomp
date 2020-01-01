@@ -38,10 +38,10 @@ t_meanOECD10 <- reshape2::melt(meanOECD10, id = "sexgp")
 sex <- NaN
 for (i in 1 : length(t_meanOECD10[, 1])) {
   if(t_meanOECD10[i, 1] == 1){
-    sex[i] <- c("男")
+    sex[i] <- c("M")
   }
   else {
-    sex[i] <- c("女")
+    sex[i] <- c("F")
   }
 }
 t_meanOECD10 <- as.data.frame(cbind(sex, t_meanOECD10[, 2 : 3]))
