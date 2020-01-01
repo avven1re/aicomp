@@ -1,7 +1,7 @@
 # packages
 library(sf);library(gridExtra);library(ggplot2);library(dplyr);
 # library(viridis);library(fieldss)
-# °İ¨÷
+# å•å·
 ques = read.csv("dataset/Happiness.csv")  
 ques[,1] <- 109-ques[,1]
 names(ques)[1:41] <- c("age",paste('q',1:38,sep=''),"marrgp","incogp")
@@ -15,13 +15,13 @@ ld2 <- ld1[-1]
 names(ld2) <- c("county","town",paste('x',1:64,sep=''))
 head(ld2)
 
-# ??‰é®??†å??
+# ??ï§î??ï‰Œ??
 taiwan.town.map <- st_read("data/town/TOWN_MOI_1070205.shp")
 head(taiwan.town.map)
 # twplt <- ggplot(data = taiwan.town.map) +
 #   geom_sf(aes(fill = TOWNNAME), show.legend= F) +
 # #  geom_sf_text(aes(label = TOWNNAME), size = 3) +
-#   labs(title = "?°?£è¡Œæ”¿??€???")
+#   labs(title = "?î¼?î»¹éŠµï—»îœœ??Â€???")
 # twplt
 ntw.map <- taiwan.town.map[c("TOWNNAME", "geometry", "TOWNCODE")]
 head(ntw.map)
@@ -32,22 +32,22 @@ head(ntw.map)
 
 # townf <- cbind(as.vector(taiwan.town.map$TOWNNAME),as.vector(taiwan.town.map$TOWNCODE),taiwan.town.map$geometry)
 # head(townf)
-# ?œ°??–è?‡å?Ÿåœ°è³‡æ?™å?ˆä½µ
+# ?î¯µ??î¡¿?ï‹©?î¸î¯µéˆï‹ª?î©“?ï…è”¥
 truemap <- left_join(ntw.map, ld2,
               by= c("TOWNNAME"= "town"))
 head(truemap)
 class(truemap)
 
-# ??å?å??
+# ??î“?î¼»??
 plt1 <- ggplot(data = truemap) +
   geom_sf(aes(fill = V13/V4)) +
 #  geom_sf_text(aes(label = TOWNNAME), size = 3) +
-  #scale_fill_distiller(palette = "Spectral", name = "äººå£(?¬)") +
-  #scale_fill_gradientn(colours = tim.colors(22), name = "äººå£(?¬)") +
-  #scale_fill_viridis(name = "äººå£(?¬)") +
-  #scale_fill_distiller(palette = "YlOrRd", name = "äººå£(?¬)") +
-  scale_fill_distiller(palette = "YlGn", direction = 1, name = "??Šè?‰æ??") +
-  labs(title="??†ä?ˆå??", x ="ç¶“åº¦", y = "ç·¯åº¦")
+  #scale_fill_distiller(palette = "Spectral", name = "éˆ­ç®î¯(?î’•)") +
+  #scale_fill_gradientn(colours = tim.colors(22), name = "éˆ­ç®î¯(?î’•)") +
+  #scale_fill_viridis(name = "éˆ­ç®î¯(?î’•)") +
+  #scale_fill_distiller(palette = "YlOrRd", name = "éˆ­ç®î¯(?î’•)") +
+  scale_fill_distiller(palette = "YlGn", direction = 1, name = "??ï“ƒ?ï¤??") +
+  labs(title="??ï‰‹?ï†??", x ="è¬îš¥æ¼²", y = "èºè‡¬æ¼²")
 plt1
 
 
