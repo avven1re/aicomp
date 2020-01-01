@@ -38,10 +38,10 @@ t_meanOECD10 <- reshape2::melt(meanOECD10, id = "sexgp")
 sex <- NaN
 for (i in 1 : length(t_meanOECD10[, 1])) {
   if(t_meanOECD10[i, 1] == 1){
-    sex[i] <- c("¨k")
+    sex[i] <- c("ç”·")
   }
   else {
-    sex[i] <- c("¤k")
+    sex[i] <- c("å¥³")
   }
 }
 t_meanOECD10 <- as.data.frame(cbind(sex, t_meanOECD10[, 2 : 3]))
@@ -51,17 +51,17 @@ ani_OECD10 <- t_meanOECD10 %>%
   ggplot(aes(x = sexgp, y = value, color = variable)) +
   geom_line(size = 1.2) + 
   geom_point(size = 2) +
-  scale_color_discrete(name = "°Ý¨÷ÃD¥Ø(º¡·N«×§C¨ì°ª1¨ì10¤À)", labels = rev(c("½Ð°Ý±z¬Q¤ÑÄ±±o§Ö¼Ö¶Ü¡H", "½Ð°Ý±z¬Q¤ÑÄ±±o¾á¼~¶Ü¡H", "½Ð°Ý±z¬Q¤ÑÄ±±oªq³à¶Ü¡H", 
-                                                                  "±z¹ï©ó¥Ø«e¥Í¬¡ªºº¡·Nµ{«×", "¹ï©ó¤H¥Í·í¤¤©Ò¦³°µ¹Lªº¨Æ±¡­È±o¶Ü?", "±z¹ï¦Û¤v¥Í¬¡¤ô·Çªºº¡·Nµ{«×", 
-                                                                  "¹ï¦Û¤v°·±dª¬ªp", "¹ï¦Û¤v¤H¥Íªº¦¨´N", "¹ï¦Û¤vªº¤H»ÚÃö«Y", "½Ð°Ý±z¹ï¦Û¤v¦w¥þ·P¨üªºº¡·Nµ{«×", 
-                                                                  "±z¹ï¦Û¤vÂkÄÝ©óªÀ°Ï¤@¥÷¤lªºº¡·Nµ{«×", "¹ï¦Û¤v¥¼¨Ó¥Í¬¡ªº«O»Ù", 
-                                                                  "½Ð°Ý±z¹ï¥i¥H°µ¦Û¤v³ßÅw¨Æ±¡ªº®É¶¡ªøµu", "±z¹ï©~¦í¦a°ÏÀô¹Ò«~½èªºº¡·Nµ{«×"))) +
-  xlab("¦~ÄÖ¤À¥¬") +
-  ylab("¥­§¡­È") +
-  scale_x_discrete(limits = 1 : 6, labels= c("¤k", "¨k")) +
+  scale_color_discrete(name = "?Ý¨??D??(???N?×§C?ì°ª1??10??)", labels = rev(c("?Ð°Ý±z?Q??Ä±?o?Ö¼Ö¶Ü¡H", "?Ð°Ý±z?Q??Ä±?o???~?Ü¡H", "?Ð°Ý±z?Q??Ä±?o?q???Ü¡H", 
+                                                                  "?z?????Ø«e?Í¬??????N?{??", "?????H?Í·ï¿½ï¿½ï¿½?Ò¦????L???Æ±??È±o???", "?z???Û¤v?Í¬????Çª????N?{??", 
+                                                                  "???Û¤v???d???p", "???Û¤v?H?Íª????N", "???Û¤v???H?????Y", "?Ð°Ý±z???Û¤v?w???P???????N?{??", 
+                                                                  "?z???Û¤v?k?Ý©??ï¿½ï¿½Ï¤@???l?????N?{??", "???Û¤v???Ó¥Í¬????O??", 
+                                                                  "?Ð°Ý±z???i?H???Û¤v???w?Æ±????É¶????u", "?z???~???a?????Ò«~?èªº???N?{??"))) +
+  xlab("?~?Ö¤ï¿½ï¿½?") +
+  ylab("??????") +
+  scale_x_discrete(limits = 1 : 6, labels= c("?k", "?k")) +
   theme(axis.text.x = element_text(angle = 0), axis.text=element_text(size = 18)) +
   ylim(c(0, 10)) +
-  ggtitle("ªÀ·|ÁpÃ´»P¥Í¬¡¼h­±º¡·N«×") +
+  ggtitle("?ï¿½ï¿½|?pÃ´?P?Í¬??h?????N??") +
   transition_reveal(sexgp) 
 
 animate(ani_OECD10, height = 500, width = 650, end_pause = 30)
