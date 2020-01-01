@@ -98,7 +98,7 @@ statistic_yyy(統計年)、site_id(區域別)、people_total(年底人口數)、
 ![alt eq_1](https://github.com/avven1re/aicomp/blob/master/images/eq_1.jpg)
 
 ### 2.次要解釋變數-性別、年齡、婚姻、收入、教育程度、地區。
-這些基本資要變數採自105年國民幸福指數調查暨主觀幸福感研究資料，包含性別(sex)、年齡(age)、婚姻(mari)、收入(inco)、教育程度(educ)、地區(area+towncode)。除了年齡之外，其餘皆是類別變數。將不符合分析資格的，像是不知道、拒答、遺失值，重新編碼成系統遺失值。
+這些基本資要變數採自105年國民幸福指數調查暨主觀幸福感研究資料，包含性別(sexgp)、年齡(age、agegp)、婚姻(marrgp)、收入(incogp)、教育程度(edugp)、地區(towncode)。除了年齡之外，其餘皆是類別變數。將不符合分析資格的，像是不知道、拒答、遺失值，重新編碼成系統遺失值。
 
 **人口加權後的特徵分配(%)**
 
