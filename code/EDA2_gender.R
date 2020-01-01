@@ -35,7 +35,16 @@ meanOECD10 <- merge(aggregate(v18 ~ sexgp, nOECD, mean, na.rm = T), meanOECD10, 
 meanOECD10 <- merge(aggregate(v19 ~ sexgp, nOECD, mean, na.rm = T), meanOECD10, by = "sexgp")
 meanOECD10 <- merge(aggregate(v20 ~ sexgp, nOECD, mean, na.rm = T), meanOECD10, by = "sexgp")
 t_meanOECD10 <- reshape2::melt(meanOECD10, id = "sexgp")
-
+sex <- NaN
+for (i in 1 : length(t_meanOECD10[, 1])) {
+  if(t_meanOECD10[i, 1] == 1){
+    sex[i] <- c("¨k")
+  }
+  else {
+    sex[i] <- c("¤k")
+  }
+}
+t_meanOECD10 <- as.data.frame(cbind(sex, t_meanOECD10[, 2 : 3]))
 write.csv(t_meanOECD10, file = "dataset/sex_to_v7-v20.csv")
 
 ani_OECD10 <- t_meanOECD10 %>%
