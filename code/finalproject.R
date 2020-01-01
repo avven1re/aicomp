@@ -10,7 +10,7 @@ library("reshape2")
 #Import data
 {
 guess_encoding("dataset/data_rHDDA.csv", n_max = 1000)
-nOECD <- read.csv("dataset/data_rHDDA.csv")
+nOECD <- read.csv("dataset/Happiness.csv")
 names(nOECD)[1] <- c("v1")
 names(nOECD)
 }
@@ -102,7 +102,7 @@ ani_OECD <- t_meanOECD %>%
     ggtitle("政府機構信任程度") + 
     transition_reveal(agegp) 
   
-  animate(ani_OECD2, height = 500, width = 650)
+  animate(ani_OECD2, height = 500, width = 650, end_pause = 30)
   anim_save("images/age_to_v31-36.gif")
   
 #animated plot 3 v37-v39
@@ -125,7 +125,7 @@ ani_OECD <- t_meanOECD %>%
     ggtitle("國家情勢信任程度") + 
     transition_reveal(agegp) 
   
-  animate(ani_OECD3, height = 500, width = 650)
+  animate(ani_OECD3, height = 500, width = 650, end_pause = 30)
   anim_save("images/age_to_v37-39.gif")
   
 #animated plot (by edu)
@@ -163,7 +163,7 @@ ani_OECD <- t_meanOECD %>%
     ggtitle("社會聯繫與生活層面滿意度") +
     transition_reveal(edugp) 
   
-  animate(ani_OECD4, height = 500, width = 650)
+  animate(ani_OECD4, height = 500, width = 650, end_pause = 30)
   anim_save("images/edu_to_v7-20.gif")
 
   #animated plot 5 v31-v36
@@ -189,7 +189,7 @@ ani_OECD <- t_meanOECD %>%
     ggtitle("政府機構信任程度") + 
     transition_reveal(edugp) 
   
-  animate(ani_OECD5, height = 500, width = 650)
+  animate(ani_OECD5, height = 500, width = 650, end_pause = 30)
   anim_save("images/edu_to_v31-36.gif")
   
   #animated plot 6 v37-v39
@@ -281,7 +281,7 @@ ani_OECD <- t_meanOECD %>%
     ggtitle("政府機構信任程度") + 
     transition_reveal(vI1) 
   
-  animate(ani_OECD8, height = 500, width = 900)
+  animate(ani_OECD8, height = 500, width = 900, end_pause = 30)
   anim_save("images/inc_to_v31-36.gif")
   
 #animated plot 6 v37-v39
@@ -306,5 +306,5 @@ ani_OECD <- t_meanOECD %>%
     ggtitle("國家情勢信任程度") + 
     transition_reveal(vI1) 
   
-  animate(ani_OECD6, height = 500, width = 900)
+  animate(ani_OECD6, height = 500, width = 900, end_pause = 30)
   anim_save("images/inc_to_v37-39.gif")
