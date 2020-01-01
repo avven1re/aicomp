@@ -17,24 +17,24 @@ library("reshape2")
 
 #gender
 #animated plot 7 v7-v20
-meanOECD <- aggregate(v7 ~ agegp, nOECD, mean, na.rm = T)
-meanOECD <- merge(aggregate(v8 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
-meanOECD <- merge(aggregate(v9 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
-meanOECD <- merge(aggregate(v10 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
-meanOECD <- merge(aggregate(v11 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
-meanOECD <- merge(aggregate(v12 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
-meanOECD <- merge(aggregate(v13 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
-meanOECD <- merge(aggregate(v14 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
-meanOECD <- merge(aggregate(v15 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
-meanOECD <- merge(aggregate(v16 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
-meanOECD <- merge(aggregate(v17 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
-meanOECD <- merge(aggregate(v18 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
-meanOECD <- merge(aggregate(v19 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
-meanOECD <- merge(aggregate(v20 ~ agegp, nOECD, mean, na.rm = T), meanOECD, by = "agegp")
-t_meanOECD <- reshape2::melt(meanOECD, id = "agegp")
+meanOECD7 <- aggregate(v7 ~ sexgp, nOECD, mean, na.rm = T)
+meanOECD7 <- merge(aggregate(v8 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
+meanOECD7 <- merge(aggregate(v9 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
+meanOECD7 <- merge(aggregate(v10 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
+meanOECD7 <- merge(aggregate(v11 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
+meanOECD7 <- merge(aggregate(v12 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
+meanOECD7 <- merge(aggregate(v13 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
+meanOECD7 <- merge(aggregate(v14 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
+meanOECD7 <- merge(aggregate(v15 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
+meanOECD7 <- merge(aggregate(v16 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
+meanOECD7 <- merge(aggregate(v17 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
+meanOECD7 <- merge(aggregate(v18 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
+meanOECD7 <- merge(aggregate(v19 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
+meanOECD7 <- merge(aggregate(v20 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
+t_meanOECD7 <- reshape2::melt(meanOECD7, id = "sexgp")
 
-ani_OECD <- t_meanOECD %>%
-  ggplot(aes(x = agegp, y = value, color = variable)) +
+ani_OECD7 <- t_meanOECD7 %>%
+  ggplot(aes(x = sexgp, y = value, color = variable)) +
   geom_line(size = 1.2) + 
   geom_point(size = 2) +
   scale_color_discrete(name = "問卷題目(滿意度低到高1到10分)", labels = rev(c("請問您昨天覺得快樂嗎？", "請問您昨天覺得擔憂嗎？", "請問您昨天覺得沮喪嗎？", 
@@ -44,11 +44,11 @@ ani_OECD <- t_meanOECD %>%
                                                                   "請問您對可以做自己喜歡事情的時間長短", "您對居住地區環境品質的滿意程度"))) +
   xlab("年齡分布") +
   ylab("平均值") +
-  scale_x_discrete(limits = 1 : 6, labels= c( "15-24 歲", "25-34 歲", "35-44 歲", "45-54 歲", "55-64 歲", "65 歲以上")) +
-  theme(axis.text.x = element_text(angle = 45), axis.text=element_text(size = 18)) +
+  scale_x_discrete(limits = 1 : 6, labels= c("女", "男")) +
+  theme(axis.text.x = element_text(angle = 0), axis.text=element_text(size = 18)) +
   ylim(c(0, 10)) +
   ggtitle("社會聯繫與生活層面滿意度") +
-  transition_reveal(agegp) 
+  transition_reveal(sexgp) 
 
-animate(ani_OECD, height = 500, width = 650, end_pause = 30)
-anim_save("images/age_to_v7-20.gif")
+animate(ani_OECD7, height = 500, width = 650, end_pause = 30)
+anim_save("images/sex_to_v7-20.gif")

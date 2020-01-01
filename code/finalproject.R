@@ -13,9 +13,8 @@ guess_encoding("dataset/Happiness.csv", n_max = 1000)
 nOECD <- read.csv("dataset/Happiness.csv")
 names(nOECD)[1] <- c("v1")
 names(nOECD)
+
 }
-
-
 #animated plot (by age)
 
 ageOECD <- function(var_pos, dataset = nOECD, save = F){
