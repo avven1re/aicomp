@@ -13,27 +13,32 @@ library("reshape2")
   nOECD <- read.csv("dataset/Happiness.csv")
   names(nOECD)[1] <- c("v1")
   names(nOECD)
-}
+  
+  OECD_weight <- as.vector(nOECD$weight)
+  nOECD2 <- as.data.frame(OECD_weight * as.matrix(nOECD[, 2:39]))
+  nOECD <- as.data.frame(cbind(nOECD2, nOECD[, 40:44]))}
 
 #gender
 #animated plot 7 v7-v20
-meanOECD7 <- aggregate(v7 ~ sexgp, nOECD, mean, na.rm = T)
-meanOECD7 <- merge(aggregate(v8 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
-meanOECD7 <- merge(aggregate(v9 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
-meanOECD7 <- merge(aggregate(v10 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
-meanOECD7 <- merge(aggregate(v11 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
-meanOECD7 <- merge(aggregate(v12 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
-meanOECD7 <- merge(aggregate(v13 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
-meanOECD7 <- merge(aggregate(v14 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
-meanOECD7 <- merge(aggregate(v15 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
-meanOECD7 <- merge(aggregate(v16 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
-meanOECD7 <- merge(aggregate(v17 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
-meanOECD7 <- merge(aggregate(v18 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
-meanOECD7 <- merge(aggregate(v19 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
-meanOECD7 <- merge(aggregate(v20 ~ sexgp, nOECD, mean, na.rm = T), meanOECD7, by = "sexgp")
-t_meanOECD7 <- reshape2::melt(meanOECD7, id = "sexgp")
+meanOECD10 <- aggregate(v7 ~ sexgp, nOECD, mean, na.rm = T)
+meanOECD10 <- merge(aggregate(v8 ~ sexgp, nOECD, mean, na.rm = T), meanOECD10, by = "sexgp")
+meanOECD10 <- merge(aggregate(v9 ~ sexgp, nOECD, mean, na.rm = T), meanOECD10, by = "sexgp")
+meanOECD10 <- merge(aggregate(v10 ~ sexgp, nOECD, mean, na.rm = T), meanOECD10, by = "sexgp")
+meanOECD10 <- merge(aggregate(v11 ~ sexgp, nOECD, mean, na.rm = T), meanOECD10, by = "sexgp")
+meanOECD10 <- merge(aggregate(v12 ~ sexgp, nOECD, mean, na.rm = T), meanOECD10, by = "sexgp")
+meanOECD10 <- merge(aggregate(v13 ~ sexgp, nOECD, mean, na.rm = T), meanOECD10, by = "sexgp")
+meanOECD10 <- merge(aggregate(v14 ~ sexgp, nOECD, mean, na.rm = T), meanOECD10, by = "sexgp")
+meanOECD10 <- merge(aggregate(v15 ~ sexgp, nOECD, mean, na.rm = T), meanOECD10, by = "sexgp")
+meanOECD10 <- merge(aggregate(v16 ~ sexgp, nOECD, mean, na.rm = T), meanOECD10, by = "sexgp")
+meanOECD10 <- merge(aggregate(v17 ~ sexgp, nOECD, mean, na.rm = T), meanOECD10, by = "sexgp")
+meanOECD10 <- merge(aggregate(v18 ~ sexgp, nOECD, mean, na.rm = T), meanOECD10, by = "sexgp")
+meanOECD10 <- merge(aggregate(v19 ~ sexgp, nOECD, mean, na.rm = T), meanOECD10, by = "sexgp")
+meanOECD10 <- merge(aggregate(v20 ~ sexgp, nOECD, mean, na.rm = T), meanOECD10, by = "sexgp")
+t_meanOECD10 <- reshape2::melt(meanOECD10, id = "sexgp")
 
-ani_OECD7 <- t_meanOECD7 %>%
+write.csv(t_meanOECD10, file = "dataset/sex_to_v7-v20.csv")
+
+ani_OECD10 <- t_meanOECD10 %>%
   ggplot(aes(x = sexgp, y = value, color = variable)) +
   geom_line(size = 1.2) + 
   geom_point(size = 2) +
@@ -50,5 +55,10 @@ ani_OECD7 <- t_meanOECD7 %>%
   ggtitle("社會聯繫與生活層面滿意度") +
   transition_reveal(sexgp) 
 
-animate(ani_OECD7, height = 500, width = 650, end_pause = 30)
+animate(ani_OECD10, height = 500, width = 650, end_pause = 30)
 anim_save("images/sex_to_v7-20.gif")
+
+#
+t_meanOECD10 %>%
+  ggplot(aes(x = sexgp, y = value)) +
+  geom_bar(t_meanOECD10, stat = "identity", mapping = aes( y = value ,fill = variable, group = sexgp))
