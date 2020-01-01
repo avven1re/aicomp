@@ -30,3 +30,4 @@ nOECD.err <- mixError(nOECD.imp$ximp, nOECD.mis, nOECD)
 nOECD.err
 
 write.csv(nOECD.imp$ximp,file="dataset/data_missing.csv",row.names = FALSE)
+
