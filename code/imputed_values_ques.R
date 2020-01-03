@@ -7,20 +7,20 @@ head(ques)
 
 # install.packages("missForest")
 library(missForest)
-#seed missing values ( 5% )
+# seed missing values ( 5% )
 ques.mis <- prodNA(ques[,c(6:19, 30:38)], noNA = 0.05)
 summary(ques.mis)
 
-#impute missing values, using all parameters as default values
+# impute missing values, using all parameters as default values
 ques.imp <- missForest(ques.mis)
 
-#check imputed values
+# check imputed values
 ques.imp$ximp
 
-#check imputation error
+# check imputation error
 ques.imp$OOBerror
 
-#comparing actual data accuracy
+# comparing actual data accuracy
 ques.err <- mixError(ques.imp$ximp, ques.mis, ques)
 ques.err
 
