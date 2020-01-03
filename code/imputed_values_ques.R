@@ -8,7 +8,7 @@ head(ques)
 # install.packages("missForest")
 library(missForest)
 # seed missing values ( 5% )
-ques.mis <- prodNA(ques[,c(6:19, 30:38)], noNA = 0.05)
+ques.mis <- prodNA(ques[,c(7:20, 31:39)], noNA = 0.05)
 summary(ques.mis)
 
 # impute missing values, using all parameters as default values
