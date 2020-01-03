@@ -40,11 +40,13 @@ fviz_eig(r_ques3)
 #isomap
 library(vegan)
 i_r_ques1 <- isomapdist(dist(r_ques1_d), ndim = 2, k = 11, fragmentedOK = T)
-
+plot(i_r_ques1)
 
 i_r_ques2 <- isomap(dist(r_ques2_d), ndim = 2, k = 5, fragmentedOK = T)
+plot(i_r_ques2)
 
 i_r_ques3 <- isomap(dist(r_ques3_d), ndim = 2, k = 5, fragmentedOK = T)
+plot(i_r_ques3)
 
 i_r_ld2 <- isomap(dist(r_ld2_d), ndim = 2, k = 5, fragmentOK = T)
 i_r_ld2
