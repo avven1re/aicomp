@@ -9,14 +9,14 @@ names(ques)[46] <- "TOWNCODE"
 head(ques)
 
 # land data
-ld1=read.csv("data/landdata.csv", skip=1, header=F, fileEncoding = "UTF-8-BOM")
-head(ld1)
+ld1=read.csv("dataset/landdata.csv", skip=1, header=F, fileEncoding = "UTF-8-BOM")
+# head(ld1)
 ld2 <- ld1[-1]
 names(ld2) <- c("county","town",paste('x',1:64,sep=''))
 head(ld2)
 
 # 鄉鎮分區
-taiwan.town.map <- st_read("data/town/TOWN_MOI_1070205.shp")
+taiwan.town.map <- st_read("dataset/town/TOWN_MOI_1070205.shp")
 head(taiwan.town.map)
 
 ntw.map <- taiwan.town.map[c("TOWNNAME", "geometry", "TOWNCODE")]
@@ -40,19 +40,22 @@ class(truemap)
 #   labs(title="分布圖", x ="經度", y = "緯度")
 # plt1
 
-
 # final.dat <- left_join(ques, truemap, by= c("t"="TOWNCODE"))
 # final.dat <- left_join(ques, town, by= c("t"='[,1]'))
 
 # 總和
-tm <- as.data.frame(truemap)
-names(tm)
-mer.dat <- merge(tm,ques,by="TOWNCODE")
+# tm <- as.data.frame(truemap)
+# names(tm)
+# mer.dat <- merge(tm,ques,by="TOWNCODE")
+dataA <- merge(truemap, ques, all=TRUE)
+# head(mer.dat)
+
 # 分ABC
-dataA <- mer.dat[, -68]
+# dataA <- mer.dat[, -68]
 head(dataA)
 set.seed(100)
 dataB = dataA[sample(nrow(dataA),100),]
 head(dataB)
 set.seed(200)
 dataC = dataA[sample(nrow(dataA),33),]
+head(dataC)
