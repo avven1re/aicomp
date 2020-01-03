@@ -1,0 +1,7 @@
+library(mice)
+library(VIM) 
+dataA.aggrplot<-aggr(dataA[,1:112], col=c('lightblue','red'), 
+                      numbers=TRUE, prop = TRUE, sortVars=TRUE, 
+                      labels=names(dataA), cex.axis=.7, gap=3)
+# q21 為 missing by design
+# missing at random < 10%, do not need to impute values
