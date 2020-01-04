@@ -32,10 +32,10 @@ ntw.map <- taiwan.town.map[c("TOWNNAME", "geometry", "TOWNCODE")]
 truemap <- left_join(ntw.map, ld2,
                      by= c("TOWNNAME"= "town"))
 
-## Merge結果
+## Merge landdata & Shapefile & Happiness
 dataA <- merge(truemap, ques, by = "TOWNCODE", all.ques=T)
 
-## 分ABC
+## ABC
 head(dataA)
 set.seed(100)
 dataB = dataA[sample(nrow(dataA),100),]
