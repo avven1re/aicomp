@@ -8,6 +8,13 @@ ques = read.csv("dataset/Happiness.csv")
 ques <- ques[, -1]
 names(ques)[1:40] <- c(paste('q',1:38,sep=''),"marrgp","incogp")
 names(ques)[45] <- "TOWNCODE"
+keeps <- c(paste('q',5:19,sep=''), paste('q',30:38,sep=''),
+           "marrgp", "incogp", "sexgp", "agegp", "edugp", 
+           "weight", "TOWNCODE")
+ques <- ques[keeps]
+names(ques)[1:6] <- c(paste('a',1:6,sep=''))
+names(ques)[7:15] <- c(paste('b',1:9,sep=''))
+names(ques)[16:24] <- c(paste('c',1:9,sep=''))
 
 ## Input landdata & Calculate 
 ld1=read.csv("dataset/landdata.csv", skip=1, header=F, 
@@ -33,6 +40,7 @@ truemap <- left_join(ntw.map, ld2,
 
 ## Merge landdata & Shapefile & Happiness
 dataA <- merge(truemap, ques, by = "TOWNCODE", all.ques=T)
+
 
 ## ABC
 head(dataA)
