@@ -34,7 +34,7 @@ ageOECD <- function(var_pos, dataset = nOECD, save = F){
 }
 
 #example
-#ageOECD(10, save = T)
+#ageOECD(10, save = F)
 
 #畫多個圖且匯出
 #for (k in 8 : 21) {
