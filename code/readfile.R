@@ -12,7 +12,12 @@ head(ques)
 ld1=read.csv("dataset/landdata.csv", skip=1, header=F, fileEncoding = "UTF-8-BOM")
 # head(ld1)
 ld2 <- ld1[-1]
-names(ld2) <- c("county","town",paste('x',1:64,sep=''))
+names(ld2) <- c("county","town","area",paste('x',1:63,sep=''))
+for (i in 1:dim(ld2)[1]){
+  for (j in 4:dim(ld2)[2]){
+    ld2[i,j] <- ld2[i,j]/ld2[i,3]
+  }
+}
 head(ld2)
 
 ## 鄉鎮分區界線
