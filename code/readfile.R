@@ -6,9 +6,20 @@ lapply(map.pkg, library, character.only=TRUE)
 ## Input Happiness
 ques = read.csv("dataset/Happiness.csv")  
 names(ques)[1:41] <- c("age",paste('q',1:38,sep=''),
-                       "marrgp","incogp")
+                       "marrgp", "incogp")
 names(ques)[46] <- "TOWNCODE"
 ques <- ques[, -1]
+keeps <- c(paste('q',5:19,sep=''), paste('q',30:38,sep=''),
+           "marrgp", "incogp", "sexgp", "agegp", "edugp", 
+           "weight")
+
+ques <- ques[keeps]
+names(ques)[1:6] <- c(paste('a',1:6,sep=''))
+names(ques)[7:15] <- c(paste('b',1:9,sep=''))
+names(ques)[16:24] <- c(paste('c',1:9,sep=''))
+head(ques)
+
+
 
 ## Input landdata & Calculate 
 ld1=read.csv("dataset/landdata.csv", skip=1, header=F, 
