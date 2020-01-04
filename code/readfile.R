@@ -10,7 +10,6 @@ head(ques)
 
 ## 土地利用資料
 ld1=read.csv("dataset/landdata.csv", skip=1, header=F, fileEncoding = "UTF-8-BOM")
-# head(ld1)
 ld2 <- ld1[-1]
 names(ld2) <- c("county","town","area",paste('x',1:63,sep=''))
 for (i in 1:dim(ld2)[1]){
@@ -26,10 +25,6 @@ head(taiwan.town.map)
 
 ntw.map <- taiwan.town.map[c("TOWNNAME", "geometry", "TOWNCODE")]
 head(ntw.map)
-# mode(taiwan.town.map)
-# town <- cbind(as.vector(taiwan.town.map$TOWNNAME),as.vector(taiwan.town.map$TOWNCODE))
-# town <- as.data.frame(taiwan.town.map[c("TOWNNAME", "TOWNCODE")])
-# head(town)
 
 ## 將土地的資料合併
 truemap <- left_join(ntw.map, ld2,
@@ -45,18 +40,10 @@ class(truemap)
 #   labs(title="分布圖", x ="經度", y = "緯度")
 # plt1
 
-# final.dat <- left_join(ques, truemap, by= c("t"="TOWNCODE"))
-# final.dat <- left_join(ques, town, by= c("t"='[,1]'))
-
 ## Merge結果
-# tm <- as.data.frame(truemap)
-# names(tm)
-# mer.dat <- merge(tm,ques,by="TOWNCODE")
 dataA <- merge(truemap, ques, all=TRUE)
-# head(mer.dat)
 
 ## 分ABC
-# dataA <- mer.dat[, -68]
 head(dataA)
 set.seed(100)
 dataB = dataA[sample(nrow(dataA),100),]
