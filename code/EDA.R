@@ -40,7 +40,7 @@ ageOECD <- function(var_pos, dataset = nOECD, save = F){
 ageOECD(14, dataA)
 
 for (i in 14 : 37) {
-  ageOECD(i, dataA, save = T)
+  ageOECD(i, dataC, save = T)
 }
 
 
