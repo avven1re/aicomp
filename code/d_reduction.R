@@ -37,6 +37,9 @@ r_ques3_d <- as.data.frame(ques[, 31 : 39])
 r_ques3 <- PCA(r_ques3_d)
 fviz_eig(r_ques3)
 
+r_ques4_d <- ques$weight * as.data.frame(cbind(r_ques1_d, r_ques2_d, r_ques3_d))
+r_ques4 <- PCA(r_ques4_d)
+fviz_eig(r_ques4)
 #isomap
 library(vegan)
 i_r_ques1 <- isomap(dist(r_ques1_d), ndim = 2, k = 5, fragmentedOK = T)
@@ -51,3 +54,6 @@ plot(i_r_ques3)
 i_r_ld2 <- isomap(dist(r_ld2_d), ndim = 2, k = 5, fragmentOK = T)
 i_r_ld2
 plot(i_r_ld2)
+
+i_r_ques4 <- isomap(dist(r_ques4_d), ndim = 2, k = 3, fragmentedOK = T)
+plot(i_r_ques4)
