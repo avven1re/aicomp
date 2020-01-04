@@ -32,7 +32,8 @@ names(ld2) <- c("county","town","area","agri","forest","traffic"
 
 ## Input Shapefile
 taiwan.town.map <- st_read("dataset/town/TOWN_MOI_1070205.shp")
-ntw.map <- taiwan.town.map[c("COUNTYNAME","TOWNNAME", "geometry", "TOWNCODE")]
+ntw.map <- as.data.frame(taiwan.town.map[c("COUNTYNAME","TOWNNAME","TOWNCODE")])
+ntw.map <- ntw.map[,1:3]
 
 ## Merge landdata & Shapefile
 truemap <- left_join(ntw.map, ld2,
