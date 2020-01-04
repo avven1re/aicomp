@@ -31,9 +31,6 @@ ntw.map <- taiwan.town.map[c("COUNTYNAME","TOWNNAME", "geometry", "TOWNCODE")]
 truemap <- left_join(ntw.map, ld2,
                      by= c("COUNTYNAME"="county","TOWNNAME"="town"))
 
-## Merge結果
-dataA <- merge(ques, truemap, all.ques=T)
-
 ## Merge landdata & Shapefile & Happiness
 dataA <- merge(truemap, ques, by = "TOWNCODE", all.ques=T)
 
