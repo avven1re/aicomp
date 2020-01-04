@@ -34,7 +34,10 @@ truemap <- left_join(ntw.map, ld2,
 ## Merge結果
 dataA <- merge(ques, truemap, all.ques=T)
 
-## 分ABC
+## Merge landdata & Shapefile & Happiness
+dataA <- merge(truemap, ques, by = "TOWNCODE", all.ques=T)
+
+## ABC
 head(dataA)
 set.seed(100)
 dataB = dataA[sample(nrow(dataA),100),]
