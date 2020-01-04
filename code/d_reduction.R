@@ -23,17 +23,17 @@ fviz_eig(r_ld2)
 
 #PCA
 #Question1
-r_ques1_d <- as.data.frame(ques[, 7:11])
+r_ques1_d <- ques$weight * as.data.frame(ques[, 6:11])
 r_ques1 <- PCA(r_ques1_d)
 fviz_eig(r_ques1)
 
 #Question2
-r_ques2_d <- as.data.frame(ques[, 12 : 20])
+r_ques2_d <- ques$weight * as.data.frame(ques[, 12 : 20])
 r_ques2 <- PCA(r_ques2_d)
 fviz_eig(r_ques2)
 
 #Question3
-r_ques3_d <- as.data.frame(ques[, 31 : 39])
+r_ques3_d <- ques$weight * as.data.frame(ques[, 31 : 39])
 r_ques3 <- PCA(r_ques3_d)
 fviz_eig(r_ques3)
 
