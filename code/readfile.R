@@ -1,14 +1,13 @@
 ## packages
 map.pkg <- c("sf", "gridExtra", "dplyr")
 #install.packages(pca.pkg)
-lapply(map.pkg, library, character.only=TRUE)
+lapply(map.pkg, library, character.only=T)
 
 ## Input Happiness
-ques = read.csv("dataset/Happiness.csv")  
-names(ques)[1:41] <- c("age",paste('q',1:38,sep=''),
-                       "marrgp","incogp")
-names(ques)[46] <- "TOWNCODE"
+ques = read.csv("dataset/Happiness.csv")
 ques <- ques[, -1]
+names(ques)[1:40] <- c(paste('q',1:38,sep=''),"marrgp","incogp")
+names(ques)[45] <- "TOWNCODE"
 
 ## Input landdata & Calculate 
 ld1=read.csv("dataset/landdata.csv", skip=1, header=F, 
@@ -26,14 +25,14 @@ names(ld2) <- c("county","town","area","agri","forest","traffic"
 
 ## Input Shapefile
 taiwan.town.map <- st_read("dataset/town/TOWN_MOI_1070205.shp")
-ntw.map <- taiwan.town.map[c("TOWNNAME", "geometry", "TOWNCODE")]
+ntw.map <- taiwan.town.map[c("COUNTYNAME","TOWNNAME", "geometry", "TOWNCODE")]
 
 ## Merge landdata & Shapefile
 truemap <- left_join(ntw.map, ld2,
-                     by= c("TOWNNAME"= "town"))
+                     by= c("COUNTYNAME"="county","TOWNNAME"="town"))
 
 ## Merge結果
-dataA <- merge(truemap, ques, by = "TOWNCODE", all.ques=T)
+dataA <- merge(ques, truemap, all.ques=T)
 
 ## 分ABC
 head(dataA)
