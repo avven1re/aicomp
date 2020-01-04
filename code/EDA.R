@@ -33,7 +33,7 @@ ageOECD <- function(var_pos, dataset = nOECD, save = F){
     
   }
   if(save == T){
-    ggsave(paste0("images/age_with_dataA_", names(dataset)[i], ".png"))}
+    ggsave(paste0("images/age_with_dataC_", names(dataset)[i], ".png"))}
   return(pl)
 }
 
