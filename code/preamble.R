@@ -25,9 +25,12 @@ names(ques)[7:15] <- c(paste('b',1:9,sep=''))
 names(ques)[16:24] <- c(paste('c',1:9,sep=''))
 head(ques)
 
+<<<<<<< HEAD:code/preamble.R
 
 >>>>>>> 9d27e36a888935661f0c30939b019f99fa070868:code/readfile.R
 
+=======
+>>>>>>> d5a7b2eb73916118554d6b44df0c7afedeb73ffc:code/readfile.R
 ## Input landdata & Calculate 
 ld1=read.csv("dataset/landdata.csv", skip=1, header=F, 
              fileEncoding = "UTF-8-BOM")
