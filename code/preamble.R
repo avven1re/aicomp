@@ -4,33 +4,11 @@ map.pkg <- c("sf", "gridExtra", "dplyr")
 lapply(map.pkg, library, character.only=T)
 
 ## Input Happiness
-<<<<<<< HEAD:code/preamble.R
 ques = read.csv("dataset/Happiness.csv")
 ques <- ques[, -1]
 names(ques)[1:40] <- c(paste('q',1:38,sep=''),"marrgp","incogp")
 names(ques)[45] <- "TOWNCODE"
-=======
-ques = read.csv("dataset/Happiness.csv")  
-names(ques)[1:41] <- c("age",paste('q',1:38,sep=''),
-                       "marrgp", "incogp")
-names(ques)[46] <- "TOWNCODE"
-ques <- ques[, -1]
-keeps <- c(paste('q',5:19,sep=''), paste('q',30:38,sep=''),
-           "marrgp", "incogp", "sexgp", "agegp", "edugp", 
-           "weight")
 
-ques <- ques[keeps]
-names(ques)[1:6] <- c(paste('a',1:6,sep=''))
-names(ques)[7:15] <- c(paste('b',1:9,sep=''))
-names(ques)[16:24] <- c(paste('c',1:9,sep=''))
-head(ques)
-
-<<<<<<< HEAD:code/preamble.R
-
->>>>>>> 9d27e36a888935661f0c30939b019f99fa070868:code/readfile.R
-
-=======
->>>>>>> d5a7b2eb73916118554d6b44df0c7afedeb73ffc:code/readfile.R
 ## Input landdata & Calculate 
 ld1=read.csv("dataset/landdata.csv", skip=1, header=F, 
              fileEncoding = "UTF-8-BOM")
