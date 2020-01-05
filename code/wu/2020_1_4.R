@@ -16,6 +16,7 @@ ques <- ques[keeps]
 names(ques)[1:6] <- c(paste('a',1:6,sep=''))
 names(ques)[7:15] <- c(paste('b',1:9,sep=''))
 names(ques)[16:24] <- c(paste('c',1:9,sep=''))
+ques <- ques[is.na(ques$TOWNCODE) == 0, ]
 
  # Input landdata & Calculate------------------------------------- 
 land=read.csv("dataset/landdata.csv", skip=1, header=F, 
@@ -79,15 +80,20 @@ c.kmeans <- kmeans(c.comp$completeObs, 4, 20)
 land.Nb <- NbClust(dataA[, 1:63], distance = "euclidean", 
                   min.nc=1, max.nc=10, method = "complete", index = "sdbw")
 land.Nb$All.index
+set.seed(123)
 land.kmeans <- kmeans(dataA[, 1:63], 7, 50)
-plot(land.kmeans$centers[1,], type = "b", ylim=c(0,500), xlim=c(0,60)) #black
-points(land.kmeans$centers[2,], col=2, type = "b") #red
-points(land.kmeans$centers[3,], col=3, type = "b") #green
-points(land.kmeans$centers[4,], col=4, type = "b") #blue
-points(land.kmeans$centers[5,], col=5, type = "b") #lblue
-points(land.kmeans$centers[6,], col=6, type = "b") #purple
-points(land.kmeans$centers[7,], col=7, type = "b") #gray
-max(land.kmeans$centers[,1])
+# plot(land.kmeans$centers[1,], type = "b", ylim=c(0,1000), xlim=c(0,65)) #black 
+# points(land.kmeans$centers[2,], col=2, type = "b") #red 38 40 45 46 63 工業住宅
+# points(land.kmeans$centers[3,], col=3, type = "b") #green
+# points(land.kmeans$centers[4,], col=4, type = "b") #blue 西部平原農業區 1 2 22 32 38 40 60 61 63 
+# points(land.kmeans$centers[5,], col=5, type = "b") #lblue 11 丘陵
+# points(land.kmeans$centers[6,], col=6, type = "b") #purple 9 22 全台山地
+# points(land.kmeans$centers[7,], col=7, type = "b") #gray 24 35 53 南部濱海
+# test <- cbind(dataA, land.kmeans$cluster)
+# test[land.kmeans$cluster==7, 2:3]
+
+
+
 
  # Dimension Reduction -------------------------------------------
  # Reduce a => 3 principal component (65%) & SIR
