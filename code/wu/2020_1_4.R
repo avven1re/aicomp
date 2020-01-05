@@ -19,15 +19,19 @@ names(ques)[16:24] <- c(paste('c',1:9,sep=''))
 ques <- ques[is.na(ques$TOWNCODE) == 0, ]
 
  # Input landdata & Calculate------------------------------------- 
-land=read.csv("dataset/landdata.csv", skip=1, header=F, 
+ld1=read.csv("dataset/landdata.csv", skip=1, header=F, 
              fileEncoding = "UTF-8-BOM")
-names(land) <- c("county","town","area", paste('l',1:63,sep=''))
-for (i in 1:dim(land)[1]){
-  for (j in 4:dim(land)[2]){
-    land[i,j] <- 1000*land[i,j]/land[i,3]
+names(ld1) <- c("county","town","area", paste('l',1:63,sep=''))
+for (i in 1:dim(ld1)[1]){
+  for (j in 4:dim(ld1)[2]){
+    ld1[i,j] <- ld1[i,j]/ld1[i,3]
   }
 }
-
+ld2 <- cbind(ld1[,1:3], rowSums(ld1[,4:9]), rowSums(ld1[,10:16]), rowSums(ld1[,17:27])
+             , rowSums(ld1[,28:38]), rowSums(ld1[,39:47]), rowSums(ld1[,48:53])
+             , rowSums(ld1[,54:57]), rowSums(ld1[,58:60]), rowSums(ld1[,61:66]))
+names(ld2) <- c("county","town","area","agri","forest","traffic"
+                ,"water","building","gov","leisure","mine","other")
  # Input Shapefile------------------------------------------------
 taiwan.town.map <- st_read("dataset/town/TOWN_MOI_1070205.shp")
 ntw.map <- as.data.frame(
@@ -36,7 +40,7 @@ ntw.map <- ntw.map[,1:3]
 
 ## Merging and Sampling Data ======================================
  # Merge landdata & Shapefile & Happiness-------------------------
-truemap <- left_join(ntw.map, land,
+truemap <- left_join(ntw.map, ld2,
                      by= c("COUNTYNAME"="county","TOWNNAME"="town"))
 dataA <- merge(truemap, ques, by = "TOWNCODE", all.ques=T)
 dataA <- dataA[, c(-(1:4))]
@@ -53,38 +57,38 @@ dataC = dataA[sample(nrow(dataA),33),]
 
 ## dataA ==========================================================
  # Dealing with missing-------------------------------------------
-a.comp <- imputePCA(dataA[, c(64:69)], ncp=2, row.w = dataA$weight)
-b.comp <- imputePCA(dataA[, c(70:78)], ncp=2, row.w = dataA$weight)
-c.comp <- imputePCA(dataA[, c(79:87)], ncp=2, row.w = dataA$weight)
+a.comp <- imputePCA(dataA[, c(10:15)], ncp=2, row.w = dataA$weight)
+b.comp <- imputePCA(dataA[, c(16:24)], ncp=2, row.w = dataA$weight)
+c.comp <- imputePCA(dataA[, c(25:33)], ncp=2, row.w = dataA$weight)
 
  # Kmeans Cluster Analysis----------------------------------------
  # Cluster a => 4 cluster
-a.Nb <- NbClust(a.comp$completeObs, distance = "euclidean", 
-                min.nc=2, max.nc=10, method = "kmeans", 
-                index = "dunn")
-a.Nb$All.index #Max
+# a.Nb <- NbClust(a.comp$completeObs, distance = "euclidean", 
+#                 min.nc=2, max.nc=10, method = "kmeans", 
+#                 index = "dunn")
+# a.Nb$All.index #Max
 set.seed(123)
 a.kmeans <- kmeans(a.comp$completeObs, 4, 20)
 
  # Cluster b => 3 cluster
-fviz_nbclust(b.comp$completeObs, kmeans, method = "wss", 
-             k.max = 10) + theme_minimal()
+# fviz_nbclust(b.comp$completeObs, kmeans, method = "wss", 
+#              k.max = 10) + theme_minimal()
 set.seed(123)
 b.kmeans <- kmeans(b.comp$completeObs, 3, 20)
 
  # Cluster c => 4 cluster
-c.Nb <- NbClust(c.comp$completeObs, distance = "euclidean", 
-                min.nc=2, max.nc=10, method = "kmeans", index = "sdbw")
-c.Nb$All.index #Min
+#c.Nb <- NbClust(c.comp$completeObs, distance = "euclidean", 
+#                min.nc=2, max.nc=10, method = "kmeans", index = "sdbw")
+#c.Nb$All.index #Min
 set.seed(123)
 c.kmeans <- kmeans(c.comp$completeObs, 4, 20)
 
  # Cluster Land => 7 cluster
-land.Nb <- NbClust(dataA[, 1:63], distance = "euclidean", 
-                  min.nc=1, max.nc=10, method = "complete", index = "sdbw")
-land.Nb$All.index
-set.seed(123)
-land.kmeans <- kmeans(dataA[, 1:63], 7, 50)
+# land.Nb <- NbClust(dataA[, 1:63], distance = "euclidean", 
+#                   min.nc=1, max.nc=10, method = "complete", index = "sdbw")
+# land.Nb$All.index
+# set.seed(123)
+# land.kmeans <- kmeans(dataA[, 1:63], 7, 50)
  # plot(land.kmeans$centers[1,], type = "b", ylim=c(0,1000), xlim=c(0,65)) #black 
  # points(land.kmeans$centers[2,], col=2, type = "b") #red 38 40 45 46 63 工業住宅
  # points(land.kmeans$centers[3,], col=3, type = "b") #green
@@ -146,46 +150,17 @@ plot(c.sir.comp[,1:2], col=c.kmeans$cluster)
  # Reduce land => 2 principal component (26%) & ISOMAP
   # ISO1:Altitude
   # ISO2:Agriculture to housing  
-land.pca <- PCA(dataA[, 1:63], ncp=2, row.w = dataA$weight)
-get_eigenvalue(land.pca) #Variance
-par(mfrow=c(1, 2))
-plot(land.pca$ind$coord[, 1], land.pca$ind$coord[, 2], 
-     xlab="PCA-1", ylab="PCA-2", col=land.kmeans$cluster)
-land.isomap <- isomap(dist(dataA[, 1:63]), ndim=2, k=75)
-plot(land.isomap, col=land.kmeans$cluster)
-land.isomap$points
+# land.pca <- PCA(dataA[, 1:63], ncp=2, row.w = dataA$weight)
+# get_eigenvalue(land.pca) #Variance
+# par(mfrow=c(1, 2))
+# plot(land.pca$ind$coord[, 1], land.pca$ind$coord[, 2], 
+#      xlab="PCA-1", ylab="PCA-2", col=land.kmeans$cluster)
+# land.isomap <- isomap(dist(dataA[, 1:63]), ndim=2, k=75)
+# plot(land.isomap, col=land.kmeans$cluster)
+# land.isomap$points
  # Regression ----------------------------------------------------
-a1.model <- lm(a.sir.comp[,1] ~ land.isomap$points[,1] + land.isomap$points[,2] + 
-              factor(dataA$marrgp) + factor(dataA$edugp) + factor(dataA$sexgp) + 
-              dataA$agegp + dataA$incogp, weights=dataA$weight) 
-summary(a1.model)
+a2.model <- lm(c.sir.comp[,3] ~ agri + forest + traffic + water + building +
+               gov + leisure + mine + factor(marrgp) + factor(edugp) + 
+               factor(sexgp) + agegp + incogp, data=dataA, weights=weight) 
+summary(a2.model)
 
-a2.model <- lm(a.sir.comp[,2] ~ land.isomap$points[,1] + land.isomap$points[,2] + 
-                 factor(dataA$marrgp) + factor(dataA$edugp) + factor(dataA$sexgp) + 
-                 dataA$agegp + dataA$incogp, weights=dataA$weight) 
-summary(step(a2.model, direction="backward", trace=FALSE))
-
-b1.model <- lm(b.sir.comp[,1] ~ land.isomap$points[,1] + land.isomap$points[,2] + 
-                 factor(dataA$marrgp) + factor(dataA$edugp) + factor(dataA$sexgp) + 
-                 dataA$agegp + dataA$incogp, weights=dataA$weight) 
-summary(b1.model)
-
-b2.model <- lm(b.sir.comp[,2] ~ land.isomap$points[,1] + land.isomap$points[,2] + 
-                 factor(dataA$marrgp) + factor(dataA$edugp) + factor(dataA$sexgp) + 
-                 dataA$agegp + dataA$incogp, weights=dataA$weight) 
-summary(b2.model)
-
-c1.model <- lm(c.sir.comp[,1] ~ land.isomap$points[,1] + land.isomap$points[,2] + 
-                 factor(dataA$marrgp) + factor(dataA$edugp) + factor(dataA$sexgp) + 
-                 dataA$agegp + dataA$incogp, weights=dataA$weight) 
-summary(c1.model)
-
-c2.model <- lm(c.sir.comp[,2] ~ land.isomap$points[,1] + land.isomap$points[,2] + 
-                 factor(dataA$marrgp) + factor(dataA$edugp) + factor(dataA$sexgp) + 
-                 dataA$agegp + dataA$incogp, weights=dataA$weight) 
-summary(c2.model)
-
-c3.model <- lm(c.sir.comp[,3] ~ land.isomap$points[,1] + land.isomap$points[,2] + 
-                 factor(dataA$marrgp) + factor(dataA$edugp) + factor(dataA$sexgp) + 
-                 dataA$agegp + dataA$incogp, weights=dataA$weight) 
-summary(c3.model)
