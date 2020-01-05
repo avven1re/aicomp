@@ -75,11 +75,11 @@ c.Nb <- NbClust(c.comp$completeObs, distance = "euclidean",
 c.Nb$All.index #Min
 c.kmeans <- kmeans(c.comp$completeObs, 4, 20)
 
- # Cluster Land => 4 cluster
-land.Nb <- NbClust(dataA[, 1:63], distance = "euclidean", 
-                   min.nc=11, max.nc=20, method = "complete", index = "sdbw")
+ # Cluster Land => 18 cluster
+ #land.Nb <- NbClust(dataA[, 1:63], distance = "euclidean", 
+ #                   min.nc=16, max.nc=20, method = "complete", index = "sdbw")
 land.Nb$All.index
-land.kmeans <- kmeans(c.comp$completeObs, 4, 20)
+land.kmeans <- kmeans(dataA[, 1:63], 18, 50)
 
 
  # Dimension Reduction -------------------------------------------
@@ -130,3 +130,14 @@ summary(c.sir)
 c.sir.comp <- as.matrix(c.comp$completeObs %*% as.matrix(c.sir$evectors[,1:3]))
 plot(c.sir.comp[,1:2], col=c.kmeans$cluster)
 
+ # Reduce land => 3 principal component (63%) & ISOMAP
+  # S1:Overall trust in government agencies or institutions
+  # S2:Supporting to free speech and dissatisfaction of political officials
+  # S3:Distrust the central government and trust the local governments
+land.pca <- PCA(dataA[, 1:63], ncp=3, row.w = dataA$weight)
+get_eigenvalue(land.pca) #Variance
+par(mfrow=c(1, 2))
+plot(land.pca$ind$coord[, 1], land.pca$ind$coord[, 2], 
+     xlab="PCA-1", ylab="PCA-2", col=land.kmeans$cluster)
+land.isomap <- isomap(dist(dataA[, 1:63]), ndim=2, k=200)
+plot(land.isomap, col=land.kmeans$cluster)
