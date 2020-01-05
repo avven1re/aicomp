@@ -1,7 +1,7 @@
 # install.packages("missForest")
 library(missForest)
 # seed missing values ( 5% )
-dataC.mis <- prodNA(dataC[,c(29, 31:33)], noNA = 0.05)
+dataC.mis <- prodNA(dataC[,c(79, 81:83)], noNA = 0.05)
 summary(dataC.mis)
 
 # impute missing values, using all parameters as default values
