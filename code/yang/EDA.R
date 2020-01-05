@@ -103,3 +103,10 @@ c_edugp <- aggregate(dataC$weight * dataC[, 14 : 37], list(dataC$edugp), mean, n
 write.csv(a_edugp, "dataset/dataA_edu_mean")
 write.csv(b_edugp, "dataset/dataB_edu_mean")
 write.csv(c_edugp, "dataset/dataC_edu_mean")
+
+a_cor <-cor(dataA[, 14:37], use = "complete.obs")
+b_cor <-cor(dataB[, 14:37], use = "complete.obs")
+c_cor <-cor(dataC[, 14:37], use = "complete.obs")
+write.csv(a_cor, "dataset/dataA_cor_matrix")
+write.csv(b_cor, "dataset/dataB_cor_matrix")
+write.csv(c_cor, "dataset/dataC_cor_matrix")
