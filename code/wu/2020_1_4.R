@@ -1,6 +1,6 @@
 ## packages=======================================================
 pkg <- c("sf", "gridExtra", "dplyr", "FactoMineR", "factoextra", 
-         "corrplot", "vegan","missMDA", "stats", "NbClust", "dr")
+         "corrplot", "vegan","missMDA", "stats", "NbClust", "dr", "glmnet")
 lapply(pkg, library, character.only=T)
 
 ## Reading & Cleaning Data ========================================
@@ -145,7 +145,7 @@ plot(c.sir.comp[,1:2], col=c.kmeans$cluster)
 
  # Reduce land => 2 principal component (26%) & ISOMAP
   # ISO1:Altitude
-  # ISO2:Housing to agriculture
+  # ISO2:Agriculture to housing  
 land.pca <- PCA(dataA[, 1:63], ncp=2, row.w = dataA$weight)
 get_eigenvalue(land.pca) #Variance
 par(mfrow=c(1, 2))
@@ -153,3 +153,39 @@ plot(land.pca$ind$coord[, 1], land.pca$ind$coord[, 2],
      xlab="PCA-1", ylab="PCA-2", col=land.kmeans$cluster)
 land.isomap <- isomap(dist(dataA[, 1:63]), ndim=2, k=75)
 plot(land.isomap, col=land.kmeans$cluster)
+land.isomap$points
+ # Regression ----------------------------------------------------
+a1.model <- lm(a.sir.comp[,1] ~ land.isomap$points[,1] + land.isomap$points[,2] + 
+              factor(dataA$marrgp) + factor(dataA$edugp) + factor(dataA$sexgp) + 
+              dataA$agegp + dataA$incogp, weights=dataA$weight) 
+summary(a1.model)
+
+a2.model <- lm(a.sir.comp[,2] ~ land.isomap$points[,1] + land.isomap$points[,2] + 
+                 factor(dataA$marrgp) + factor(dataA$edugp) + factor(dataA$sexgp) + 
+                 dataA$agegp + dataA$incogp, weights=dataA$weight) 
+summary(step(a2.model, direction="backward", trace=FALSE))
+
+b1.model <- lm(b.sir.comp[,1] ~ land.isomap$points[,1] + land.isomap$points[,2] + 
+                 factor(dataA$marrgp) + factor(dataA$edugp) + factor(dataA$sexgp) + 
+                 dataA$agegp + dataA$incogp, weights=dataA$weight) 
+summary(b1.model)
+
+b2.model <- lm(b.sir.comp[,2] ~ land.isomap$points[,1] + land.isomap$points[,2] + 
+                 factor(dataA$marrgp) + factor(dataA$edugp) + factor(dataA$sexgp) + 
+                 dataA$agegp + dataA$incogp, weights=dataA$weight) 
+summary(b2.model)
+
+c1.model <- lm(c.sir.comp[,1] ~ land.isomap$points[,1] + land.isomap$points[,2] + 
+                 factor(dataA$marrgp) + factor(dataA$edugp) + factor(dataA$sexgp) + 
+                 dataA$agegp + dataA$incogp, weights=dataA$weight) 
+summary(c1.model)
+
+c2.model <- lm(c.sir.comp[,2] ~ land.isomap$points[,1] + land.isomap$points[,2] + 
+                 factor(dataA$marrgp) + factor(dataA$edugp) + factor(dataA$sexgp) + 
+                 dataA$agegp + dataA$incogp, weights=dataA$weight) 
+summary(c2.model)
+
+c3.model <- lm(c.sir.comp[,3] ~ land.isomap$points[,1] + land.isomap$points[,2] + 
+                 factor(dataA$marrgp) + factor(dataA$edugp) + factor(dataA$sexgp) + 
+                 dataA$agegp + dataA$incogp, weights=dataA$weight) 
+summary(c3.model)
