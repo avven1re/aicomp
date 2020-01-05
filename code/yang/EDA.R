@@ -110,3 +110,38 @@ c_cor <-cor(dataC[, 14:37], use = "complete.obs")
 write.csv(a_cor, "dataset/dataA_cor_matrix")
 write.csv(b_cor, "dataset/dataB_cor_matrix")
 write.csv(c_cor, "dataset/dataC_cor_matrix")
+
+library(reshape2)
+melted_a_cor <- melt(a_cor)
+head(melted_a_cor)
+
+melted_b_cor <- melt(b_cor)
+head(melted_a_cor)
+
+melted_c_cor <- melt(c_cor)
+head(melted_a_cor)
+
+ggplot(data = melted_a_cor, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                       midpoint = 0, limit = c(-1,1), space = "Lab", 
+                       name="Pearson\nCorrelation") +
+  ggtitle("dataA Correlation Matrix")
+  ggsave("images/dataA_corr_image.png")
+
+ggplot(data = melted_b_cor, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                       midpoint = 0, limit = c(-1,1), space = "Lab", 
+                       name="Pearson\nCorrelation") +
+  ggtitle("dataB Correlation Matrix")
+ggsave("images/dataB_corr_image.png")
+
+
+ggplot(data = melted_c_cor, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                       midpoint = 0, limit = c(-1,1), space = "Lab", 
+                       name="Pearson\nCorrelation") +
+  ggtitle("dataC Correlation Matrix")
+ggsave("images/dataC_corr_image.png")
