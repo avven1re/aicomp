@@ -75,12 +75,19 @@ c.Nb <- NbClust(c.comp$completeObs, distance = "euclidean",
 c.Nb$All.index #Min
 c.kmeans <- kmeans(c.comp$completeObs, 4, 20)
 
- # Cluster Land => 18 cluster
- #land.Nb <- NbClust(dataA[, 1:63], distance = "euclidean", 
- #                   min.nc=16, max.nc=20, method = "complete", index = "sdbw")
+ # Cluster Land => 7 cluster
+land.Nb <- NbClust(dataA[, 1:63], distance = "euclidean", 
+                  min.nc=1, max.nc=10, method = "complete", index = "sdbw")
 land.Nb$All.index
-land.kmeans <- kmeans(dataA[, 1:63], 18, 50)
-
+land.kmeans <- kmeans(dataA[, 1:63], 7, 50)
+plot(land.kmeans$centers[1,], type = "b", ylim=c(0,500), xlim=c(0,60)) #black
+points(land.kmeans$centers[2,], col=2, type = "b") #red
+points(land.kmeans$centers[3,], col=3, type = "b") #green
+points(land.kmeans$centers[4,], col=4, type = "b") #blue
+points(land.kmeans$centers[5,], col=5, type = "b") #lblue
+points(land.kmeans$centers[6,], col=6, type = "b") #purple
+points(land.kmeans$centers[7,], col=7, type = "b") #gray
+max(land.kmeans$centers[,1])
 
  # Dimension Reduction -------------------------------------------
  # Reduce a => 3 principal component (65%) & SIR
@@ -130,14 +137,14 @@ summary(c.sir)
 c.sir.comp <- as.matrix(c.comp$completeObs %*% as.matrix(c.sir$evectors[,1:3]))
 plot(c.sir.comp[,1:2], col=c.kmeans$cluster)
 
- # Reduce land => 3 principal component (63%) & ISOMAP
+ # Reduce land => 2 principal component (63%) & ISOMAP
   # S1:Overall trust in government agencies or institutions
   # S2:Supporting to free speech and dissatisfaction of political officials
-  # S3:Distrust the central government and trust the local governments
-land.pca <- PCA(dataA[, 1:63], ncp=3, row.w = dataA$weight)
+
+land.pca <- PCA(dataA[, 1:63], ncp=2, row.w = dataA$weight)
 get_eigenvalue(land.pca) #Variance
 par(mfrow=c(1, 2))
 plot(land.pca$ind$coord[, 1], land.pca$ind$coord[, 2], 
      xlab="PCA-1", ylab="PCA-2", col=land.kmeans$cluster)
-land.isomap <- isomap(dist(dataA[, 1:63]), ndim=2, k=200)
+land.isomap <- isomap(dist(dataA[, 1:63]), ndim=2, k=100)
 plot(land.isomap, col=land.kmeans$cluster)
