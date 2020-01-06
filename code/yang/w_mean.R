@@ -121,13 +121,13 @@ dataA_cor_test <- as.data.frame(cor.test.mat(corr, 1 : 18))
 names(dataA_cor_test) <- names(corr)
 row.names(dataA_cor_test) <- names(corr)
 head(dataA_cor_test)
-write.csv(dataA_cor_test, "images/dataA_pvalue_reduced_cortest_mat.csv")
+write.csv(dataA_cor_test, "dataset/dataA_pvalue_reduced_cortest_mat.csv")
 
 dataA_cor_test2 <- as.data.frame(cor.test.mat(corr, 1 : 18), type = "estimate")
 names(dataA_cor_test2) <- names(corr)
 row.names(dataA_cor_test2) <- names(corr)
 head(dataA_cor_test2)
-write.csv(dataA_cor_test2, "images/dataA_estimate_reduced_cortest_mat.csv")
+write.csv(dataA_cor_test2, "dataset/dataA_estimate_reduced_cortest_mat.csv")
 
 heatmap(as.matrix(dataA_cor_test))
 
@@ -164,13 +164,13 @@ dataB_cor_test <- as.data.frame(cor.test.mat(corr, 1 : 18))
 names(dataB_cor_test) <- names(corr)
 row.names(dataB_cor_test) <- names(corr)
 head(dataB_cor_test)
-write.csv(dataB_cor_test, "images/dataB_pvalue_reduced_cortest_mat.csv")
+write.csv(dataB_cor_test, "dataset/dataB_pvalue_reduced_cortest_mat.csv")
 
 dataB_cor_test2 <- as.data.frame(cor.test.mat(corr, 1 : 18), type = "estimate")
 names(dataB_cor_test2) <- names(corr)
 row.names(dataB_cor_test2) <- names(corr)
 head(dataB_cor_test2)
-write.csv(dataB_cor_test2, "images/dataB_estimate_reduced_cortest_mat.csv")
+write.csv(dataB_cor_test2, "dataset/dataB_estimate_reduced_cortest_mat.csv")
 
 heatmap(as.matrix(dataB_cor_test))
 
@@ -206,13 +206,13 @@ dataC_cor_test <- as.data.frame(cor.test.mat(corr, 1 : 18))
 names(dataC_cor_test) <- names(corr)
 row.names(dataC_cor_test) <- names(corr)
 head(dataC_cor_test)
-write.csv(dataC_cor_test, "images/dataC_pvalue_reduced_cortest_mat.csv")
+write.csv(dataC_cor_test, "dataset/dataC_pvalue_reduced_cortest_mat.csv")
 
 dataC_cor_test2 <- as.data.frame(cor.test.mat(corr, 1 : 18), type = "estimate")
 names(dataC_cor_test2) <- names(corr)
 row.names(dataC_cor_test2) <- names(corr)
 head(dataC_cor_test2)
-write.csv(dataC_cor_test2, "images/dataC_estimate_reduced_cortest_mat.csv")
+write.csv(dataC_cor_test2, "dataset/dataC_estimate_reduced_cortest_mat.csv")
 
 heatmap(as.matrix(dataC_cor_test))
 
