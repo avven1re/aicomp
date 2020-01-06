@@ -27,10 +27,10 @@ for (i in 1:dim(ld1)[1]){
     ld1[i,j] <- ld1[i,j]/ld1[i,3]
   }
 }
-ld2 <- cbind(ld1, rowSums(ld1[,4:9]), rowSums(ld1[,10:16]), rowSums(ld1[,17:27])
+ld2 <- cbind(ld1[,1:3], 1000*ld1[,4:66], rowSums(ld1[,4:9]), rowSums(ld1[,10:16]), rowSums(ld1[,17:27])
              , rowSums(ld1[,28:38]), rowSums(ld1[,39:47]), rowSums(ld1[,48:53])
              , rowSums(ld1[,54:57]), rowSums(ld1[,58:60]), rowSums(ld1[,61:66]))
-names(ld2) <- c("county","town",paste('l',1:63,sep=''),"area","agri","forest","traffic"
+names(ld2) <- c("county","town","area", paste('l',1:63,sep=''),"agri","forest","traffic"
                 ,"water","building","gov","leisure","mine","other")
 
 # Input Shapefile------------------------------------------------
@@ -159,6 +159,12 @@ plot(land.pca$ind$coord[, 1], land.pca$ind$coord[, 2],
 land.isomap <- isomap(dist(dataA[, 1:63]), ndim=2, k=75)
 plot(land.isomap, col=land.kmeans$cluster)
 land.isomap$points
+
+# Corr---------------------------------------------------------
+corr <- cbind(a.sir.comp, b.sir.comp, c.sir.comp, dataA[ ,64:73], 
+              land.isomap$points)
+
+
 ## Draw Map========================================================
 # ntw.map1 <- taiwan.town.map[c("COUNTYNAME","TOWNNAME","TOWNCODE")]
 # truemap1 <- left_join(ntw.map1, ld2,
