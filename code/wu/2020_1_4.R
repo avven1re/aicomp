@@ -159,33 +159,73 @@ plot(c.sir.comp[,1:2], col=c.kmeans$cluster)
 # land.isomap <- isomap(dist(dataA[, 1:63]), ndim=2, k=75)
 # plot(land.isomap, col=land.kmeans$cluster)
 # land.isomap$points
-# Regression ----------------------------------------------------
-a2.model <- lm(c.sir.comp[,3] ~ agri + forest + traffic + water + building +
-                 gov + leisure + mine + factor(marrgp) + factor(edugp) + 
-                 factor(sexgp) + agegp + incogp, data=dataA, weights=weight) 
-summary(a2.model)
-
-## Draw Map========================================================
-ntw.map1 <- taiwan.town.map[c("COUNTYNAME","TOWNNAME","TOWNCODE")]
-truemap1 <- left_join(ntw.map1, ld2,
-                      by= c("COUNTYNAME"="county","TOWNNAME"="town"))
-
-mp1 <- ggplot(data = truemap1) + geom_sf(aes(fill = agri)) +
-  scale_fill_distiller(palette = "Oranges", direction = 1, 
-                       name = "Agricultural") +
-  coord_sf(xlim = c(119, 123), ylim = c(25.5, 21.8), expand = F) + 
-  labs(title="Agricultural", x ="longitude", y = "latitude") +
-  theme_bw() + theme(legend.position = c(0.8, 0.2))
-ggsave(mp1, height = 1300 , width = 629)
-
-ggplot(data = truemap1) +
-  geom_sf(aes(fill = forest)) +
-  #  geom_sf_text(aes(label = TOWNNAME), size = 3) +
-  scale_fill_distiller(palette = "YlGn", direction = 1, 
-                       name = "Forest") +
-  labs(title="Forest in dataA", x ="longitude", y = "latitude")
-
-
-
-
-
+# ## Draw Map========================================================
+# ntw.map1 <- taiwan.town.map[c("COUNTYNAME","TOWNNAME","TOWNCODE")]
+# truemap1 <- left_join(ntw.map1, ld2,
+#                       by= c("COUNTYNAME"="county","TOWNNAME"="town"))
+# 
+# ggplot(data = truemap1) + geom_sf(aes(fill = agri)) +
+#   scale_fill_distiller(palette = "Oranges", direction = 1, 
+#                        name = "Agricultural") +
+#   coord_sf(xlim = c(119, 123), ylim = c(25.5, 21.8), expand = F) + 
+#   labs(title="Agricultural", x ="longitude", y = "latitude") +
+#   theme_bw() + theme(legend.position = c(0.8, 0.2))
+# ggsave("Map_Agricultural.jpg", height = 14 , width = 14, units="cm")
+# 
+# ggplot(data = truemap1) + geom_sf(aes(fill = forest)) +
+#   scale_fill_distiller(palette = "YlGn", direction = 1, 
+#                        name = "Forest") +
+#   coord_sf(xlim = c(119, 123), ylim = c(25.5, 21.8), expand = F) + 
+#   labs(title="Forest", x ="longitude", y = "latitude") +
+#   theme_bw() + theme(legend.position = c(0.8, 0.2))
+# ggsave("Map_Forest.jpg", height = 14 , width = 14, units="cm")
+# 
+# ggplot(data = truemap1) + geom_sf(aes(fill = traffic)) +
+#   scale_fill_distiller(palette = "Greys", direction = 1, 
+#                        name = "traffic") +
+#   coord_sf(xlim = c(119, 123), ylim = c(25.5, 21.8), expand = F) + 
+#   labs(title="traffic", x ="longitude", y = "latitude") +
+#   theme_bw() + theme(legend.position = c(0.8, 0.2))
+# ggsave("Map_traffic.jpg", height = 14 , width = 14, units="cm")
+# 
+# ggplot(data = truemap1) + geom_sf(aes(fill = water)) +
+#   scale_fill_distiller(palette = "Blues", direction = 1, 
+#                        name = "water") +
+#   coord_sf(xlim = c(119, 123), ylim = c(25.5, 21.8), expand = F) + 
+#   labs(title="water", x ="longitude", y = "latitude") +
+#   theme_bw() + theme(legend.position = c(0.8, 0.2))
+# ggsave("Map_water.jpg", height = 14 , width = 14, units="cm")
+# 
+# ggplot(data = truemap1) + geom_sf(aes(fill = building)) +
+#   scale_fill_distiller(palette = "Purples", direction = 1, 
+#                        name = "building") +
+#   coord_sf(xlim = c(119, 123), ylim = c(25.5, 21.8), expand = F) + 
+#   labs(title="building", x ="longitude", y = "latitude") +
+#   theme_bw() + theme(legend.position = c(0.8, 0.2))
+# ggsave("Map_building.jpg", height = 14 , width = 14, units="cm")
+# 
+# ggplot(data = truemap1) + geom_sf(aes(fill = gov)) +
+#   scale_fill_distiller(palette = "RdPu", direction = 1, 
+#                        name = "gov") +
+#   coord_sf(xlim = c(119, 123), ylim = c(25.5, 21.8), expand = F) + 
+#   labs(title="gov", x ="longitude", y = "latitude") +
+#   theme_bw() + theme(legend.position = c(0.8, 0.2))
+# ggsave("Map_gov.jpg", height = 14 , width = 14, units="cm")
+# 
+# ggplot(data = truemap1) + geom_sf(aes(fill = leisure)) +
+#   scale_fill_distiller(palette = "YlOrBr", direction = 1, 
+#                        name = "leisure") +
+#   coord_sf(xlim = c(119, 123), ylim = c(25.5, 21.8), expand = F) + 
+#   labs(title="leisure", x ="longitude", y = "latitude") +
+#   theme_bw() + theme(legend.position = c(0.8, 0.2))
+# ggsave("Map_leisure.jpg", height = 14 , width = 14, units="cm")
+# 
+# ggplot(data = truemap1) + geom_sf(aes(fill = mine)) +
+#   scale_fill_distiller(palette = "BrBG", direction = 2, 
+#                        name = "mine") +
+#   coord_sf(xlim = c(119, 123), ylim = c(25.5, 21.8), expand = F) + 
+#   labs(title="mine", x ="longitude", y = "latitude") +
+#   theme_bw() + theme(legend.position = c(0.8, 0.2))
+# ggsave("Map_mine.jpg", height = 14 , width = 14, units="cm")
+# 
+# 
