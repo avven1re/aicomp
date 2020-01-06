@@ -27,10 +27,10 @@ for (i in 1:dim(ld1)[1]){
     ld1[i,j] <- ld1[i,j]/ld1[i,3]
   }
 }
-ld2 <- cbind(ld1[,1:3], rowSums(ld1[,4:9]), rowSums(ld1[,10:16]), rowSums(ld1[,17:27])
+ld2 <- cbind(ld1, rowSums(ld1[,4:9]), rowSums(ld1[,10:16]), rowSums(ld1[,17:27])
              , rowSums(ld1[,28:38]), rowSums(ld1[,39:47]), rowSums(ld1[,48:53])
              , rowSums(ld1[,54:57]), rowSums(ld1[,58:60]), rowSums(ld1[,61:66]))
-names(ld2) <- c("county","town","area","agri","forest","traffic"
+names(ld2) <- c("county","town",paste('l',1:63,sep=''),"area","agri","forest","traffic"
                 ,"water","building","gov","leisure","mine","other")
 
 # Input Shapefile------------------------------------------------
@@ -44,7 +44,7 @@ ntw.map <- ntw.map[,1:3]
 truemap <- left_join(ntw.map, ld2,
                      by= c("COUNTYNAME"="county","TOWNNAME"="town"))
 dataA <- merge(truemap, ques, by = "TOWNCODE", all.ques=T)
-dataA <- dataA[, c(-(1:4))]
+dataA <- dataA[, c(-(1:3))]
 
 # Sampling ABC---------------------------------------------------
 # dim(dataA)
@@ -58,11 +58,11 @@ dataC = dataA[sample(nrow(dataA),33),]
 
 ## dataA ==========================================================
 # Dealing with missing-------------------------------------------
-a.comp <- imputePCA(dataA[, c(10:15)], ncp=2, row.w = dataA$weight)
-b.comp <- imputePCA(dataA[, c(16:24)], ncp=2, row.w = dataA$weight)
-c.comp <- imputePCA(dataA[, c(25:33)], ncp=2, row.w = dataA$weight)
+a.comp <- imputePCA(dataA[, c(74:79)], ncp=2, row.w = dataA$weight)
+b.comp <- imputePCA(dataA[, c(80:88)], ncp=2, row.w = dataA$weight)
+c.comp <- imputePCA(dataA[, c(89:97)], ncp=2, row.w = dataA$weight)
 
-# Kmeans Cluster Analysis----------------------------------------
+# Kmeans Cluster Anal]ysis----------------------------------------
 # Cluster a => 4 cluster
 # a.Nb <- NbClust(a.comp$completeObs, distance = "euclidean", 
 #                 min.nc=2, max.nc=10, method = "kmeans", 
@@ -85,15 +85,15 @@ set.seed(123)
 c.kmeans <- kmeans(c.comp$completeObs, 4, 20)
 
 # Cluster Land => 7 cluster
-# land.Nb <- NbClust(dataA[, 1:63], distance = "euclidean", 
+# land.Nb <- NbClust(dataA[, 1:63], distance = "euclidean",
 #                   min.nc=1, max.nc=10, method = "complete", index = "sdbw")
-# land.Nb$All.index
-# set.seed(123)
-# land.kmeans <- kmeans(dataA[, 1:63], 7, 50)
-# plot(land.kmeans$centers[1,], type = "b", ylim=c(0,1000), xlim=c(0,65)) #black 
+#land.Nb$All.index
+set.seed(123)
+land.kmeans <- kmeans(dataA[, 1:63], 7, 50)
+# plot(land.kmeans$centers[1,], type = "b", ylim=c(0,1000), xlim=c(0,65)) #black
 # points(land.kmeans$centers[2,], col=2, type = "b") #red 38 40 45 46 63 工業住宅
 # points(land.kmeans$centers[3,], col=3, type = "b") #green
-# points(land.kmeans$centers[4,], col=4, type = "b") #blue 西部平原農業區 1 2 22 32 38 40 60 61 63 
+# points(land.kmeans$centers[4,], col=4, type = "b") #blue 西部平原農業區 1 2 22 32 38 40 60 61 63
 # points(land.kmeans$centers[5,], col=5, type = "b") #lblue 11 丘陵
 # points(land.kmeans$centers[6,], col=6, type = "b") #purple 9 22 全台山地
 # points(land.kmeans$centers[7,], col=7, type = "b") #gray 24 35 53 南部濱海
@@ -150,16 +150,16 @@ plot(c.sir.comp[,1:2], col=c.kmeans$cluster)
 
 # Reduce land => 2 principal component (26%) & ISOMAP
 # ISO1:Altitude
-# ISO2:Agriculture to housing  
-# land.pca <- PCA(dataA[, 1:63], ncp=2, row.w = dataA$weight)
-# get_eigenvalue(land.pca) #Variance
-# par(mfrow=c(1, 2))
-# plot(land.pca$ind$coord[, 1], land.pca$ind$coord[, 2], 
-#      xlab="PCA-1", ylab="PCA-2", col=land.kmeans$cluster)
-# land.isomap <- isomap(dist(dataA[, 1:63]), ndim=2, k=75)
-# plot(land.isomap, col=land.kmeans$cluster)
-# land.isomap$points
-# ## Draw Map========================================================
+# ISO2:Agriculture to housing
+land.pca <- PCA(dataA[, 1:63], ncp=2, row.w = dataA$weight)
+get_eigenvalue(land.pca) #Variance
+par(mfrow=c(1, 2))
+plot(land.pca$ind$coord[, 1], land.pca$ind$coord[, 2],
+     xlab="PCA-1", ylab="PCA-2", col=land.kmeans$cluster)
+land.isomap <- isomap(dist(dataA[, 1:63]), ndim=2, k=75)
+plot(land.isomap, col=land.kmeans$cluster)
+land.isomap$points
+## Draw Map========================================================
 # ntw.map1 <- taiwan.town.map[c("COUNTYNAME","TOWNNAME","TOWNCODE")]
 # truemap1 <- left_join(ntw.map1, ld2,
 #                       by= c("COUNTYNAME"="county","TOWNNAME"="town"))
