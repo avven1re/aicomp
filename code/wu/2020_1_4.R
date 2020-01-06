@@ -44,7 +44,7 @@ ntw.map <- ntw.map[,1:3]
 truemap <- left_join(ntw.map, ld2,
                      by= c("COUNTYNAME"="county","TOWNNAME"="town"))
 dataA <- merge(truemap, ques, by = "TOWNCODE", all.ques=T)
-dataA <- dataA[, c(-(1:3))]
+dataA <- dataA[, c(-(1:4))]
 
 # Sampling ABC---------------------------------------------------
 # dim(dataA)
@@ -58,9 +58,9 @@ dataC = dataA[sample(nrow(dataA),33),]
 
 ## dataA ==========================================================
 # Dealing with missing-------------------------------------------
-a.comp <- imputePCA(dataA[, c(74:79)], ncp=2, row.w = dataA$weight)
-b.comp <- imputePCA(dataA[, c(80:88)], ncp=2, row.w = dataA$weight)
-c.comp <- imputePCA(dataA[, c(89:97)], ncp=2, row.w = dataA$weight)
+a.comp <- imputePCA(dataA[, c(73:78)], ncp=2, row.w = dataA$weight)
+b.comp <- imputePCA(dataA[, c(79:87)], ncp=2, row.w = dataA$weight)
+c.comp <- imputePCA(dataA[, c(88:96)], ncp=2, row.w = dataA$weight)
 
 # Kmeans Cluster Anal]ysis----------------------------------------
 # Cluster a => 4 cluster
@@ -161,9 +161,8 @@ plot(land.isomap, col=land.kmeans$cluster)
 land.isomap$points
 
 # Corr---------------------------------------------------------
-corr <- cbind(a.sir.comp, b.sir.comp, c.sir.comp, dataA[ ,64:73], 
-              land.isomap$points)
-
+corr <- cbind(a.sir.comp, b.sir.comp, c.sir.comp, dataA[ ,64:72])
+head(corr)
 
 ## Draw Map========================================================
 # ntw.map1 <- taiwan.town.map[c("COUNTYNAME","TOWNNAME","TOWNCODE")]
