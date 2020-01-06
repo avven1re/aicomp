@@ -4,7 +4,7 @@ pkg <- c("sf", "gridExtra", "dplyr", "FactoMineR", "factoextra",
 lapply(pkg, library, character.only=T)
 
 ## Reading & Cleaning Data ========================================
- # Input Happiness------------------------------------------------
+# Input Happiness------------------------------------------------
 ques = read.csv("dataset/Happiness.csv")
 ques <- ques[, -1]
 names(ques)[1:40] <- c(paste('q',1:38,sep=''),"marrgp","incogp")
@@ -18,7 +18,7 @@ names(ques)[7:15] <- c(paste('b',1:9,sep=''))
 names(ques)[16:24] <- c(paste('c',1:9,sep=''))
 ques <- ques[is.na(ques$TOWNCODE) == 0, ]
 
- # Input landdata & Calculate------------------------------------- 
+# Input landdata & Calculate------------------------------------- 
 ld1=read.csv("dataset/landdata.csv", skip=1, header=F, 
              fileEncoding = "UTF-8-BOM")
 names(ld1) <- c("county","town","area", paste('l',1:63,sep=''))
@@ -32,37 +32,38 @@ ld2 <- cbind(ld1[,1:3], rowSums(ld1[,4:9]), rowSums(ld1[,10:16]), rowSums(ld1[,1
              , rowSums(ld1[,54:57]), rowSums(ld1[,58:60]), rowSums(ld1[,61:66]))
 names(ld2) <- c("county","town","area","agri","forest","traffic"
                 ,"water","building","gov","leisure","mine","other")
- # Input Shapefile------------------------------------------------
+
+# Input Shapefile------------------------------------------------
 taiwan.town.map <- st_read("dataset/town/TOWN_MOI_1070205.shp")
 ntw.map <- as.data.frame(
   taiwan.town.map[c("COUNTYNAME","TOWNNAME","TOWNCODE")])
 ntw.map <- ntw.map[,1:3]
 
 ## Merging and Sampling Data ======================================
- # Merge landdata & Shapefile & Happiness-------------------------
+# Merge landdata & Shapefile & Happiness-------------------------
 truemap <- left_join(ntw.map, ld2,
                      by= c("COUNTYNAME"="county","TOWNNAME"="town"))
 dataA <- merge(truemap, ques, by = "TOWNCODE", all.ques=T)
 dataA <- dataA[, c(-(1:4))]
 
- # Sampling ABC---------------------------------------------------
- # dim(dataA)
- # head(dataA)
+# Sampling ABC---------------------------------------------------
+# dim(dataA)
+# head(dataA)
 set.seed(100)
 dataB = dataA[sample(nrow(dataA),100),]
- # head(dataB)
+# head(dataB)
 set.seed(200)
 dataC = dataA[sample(nrow(dataA),33),]
- # head(dataC)
+# head(dataC)
 
 ## dataA ==========================================================
- # Dealing with missing-------------------------------------------
+# Dealing with missing-------------------------------------------
 a.comp <- imputePCA(dataA[, c(10:15)], ncp=2, row.w = dataA$weight)
 b.comp <- imputePCA(dataA[, c(16:24)], ncp=2, row.w = dataA$weight)
 c.comp <- imputePCA(dataA[, c(25:33)], ncp=2, row.w = dataA$weight)
 
- # Kmeans Cluster Analysis----------------------------------------
- # Cluster a => 4 cluster
+# Kmeans Cluster Analysis----------------------------------------
+# Cluster a => 4 cluster
 # a.Nb <- NbClust(a.comp$completeObs, distance = "euclidean", 
 #                 min.nc=2, max.nc=10, method = "kmeans", 
 #                 index = "dunn")
@@ -70,40 +71,40 @@ c.comp <- imputePCA(dataA[, c(25:33)], ncp=2, row.w = dataA$weight)
 set.seed(123)
 a.kmeans <- kmeans(a.comp$completeObs, 4, 20)
 
- # Cluster b => 3 cluster
+# Cluster b => 3 cluster
 # fviz_nbclust(b.comp$completeObs, kmeans, method = "wss", 
 #              k.max = 10) + theme_minimal()
 set.seed(123)
 b.kmeans <- kmeans(b.comp$completeObs, 3, 20)
 
- # Cluster c => 4 cluster
+# Cluster c => 4 cluster
 #c.Nb <- NbClust(c.comp$completeObs, distance = "euclidean", 
 #                min.nc=2, max.nc=10, method = "kmeans", index = "sdbw")
 #c.Nb$All.index #Min
 set.seed(123)
 c.kmeans <- kmeans(c.comp$completeObs, 4, 20)
 
- # Cluster Land => 7 cluster
+# Cluster Land => 7 cluster
 # land.Nb <- NbClust(dataA[, 1:63], distance = "euclidean", 
 #                   min.nc=1, max.nc=10, method = "complete", index = "sdbw")
 # land.Nb$All.index
 # set.seed(123)
 # land.kmeans <- kmeans(dataA[, 1:63], 7, 50)
- # plot(land.kmeans$centers[1,], type = "b", ylim=c(0,1000), xlim=c(0,65)) #black 
- # points(land.kmeans$centers[2,], col=2, type = "b") #red 38 40 45 46 63 工業住宅
- # points(land.kmeans$centers[3,], col=3, type = "b") #green
- # points(land.kmeans$centers[4,], col=4, type = "b") #blue 西部平原農業區 1 2 22 32 38 40 60 61 63 
- # points(land.kmeans$centers[5,], col=5, type = "b") #lblue 11 丘陵
- # points(land.kmeans$centers[6,], col=6, type = "b") #purple 9 22 全台山地
- # points(land.kmeans$centers[7,], col=7, type = "b") #gray 24 35 53 南部濱海
- # test <- cbind(dataA, land.kmeans$cluster)
- # test[land.kmeans$cluster==1, 2:3]
+# plot(land.kmeans$centers[1,], type = "b", ylim=c(0,1000), xlim=c(0,65)) #black 
+# points(land.kmeans$centers[2,], col=2, type = "b") #red 38 40 45 46 63 工業住宅
+# points(land.kmeans$centers[3,], col=3, type = "b") #green
+# points(land.kmeans$centers[4,], col=4, type = "b") #blue 西部平原農業區 1 2 22 32 38 40 60 61 63 
+# points(land.kmeans$centers[5,], col=5, type = "b") #lblue 11 丘陵
+# points(land.kmeans$centers[6,], col=6, type = "b") #purple 9 22 全台山地
+# points(land.kmeans$centers[7,], col=7, type = "b") #gray 24 35 53 南部濱海
+# test <- cbind(dataA, land.kmeans$cluster)
+# test[land.kmeans$cluster==1, 2:3]
 
- # Dimension Reduction -------------------------------------------
- # Reduce a => 3 principal component (65%) & SIR
-  # S1:worried and depressed
-  # S2:Social contact and interaction dissatisfaction
-  # S3:Not worried but depressed
+# Dimension Reduction -------------------------------------------
+# Reduce a => 3 principal component (65%) & SIR
+# S1:worried and depressed
+# S2:Social contact and interaction dissatisfaction
+# S3:Not worried but depressed
 a.pca <- PCA(a.comp$completeObs, ncp=3, row.w = dataA$weight)
 get_eigenvalue(a.pca) #Variance
 par(mfrow=c(1, 2))
@@ -116,9 +117,9 @@ summary(a.sir)
 a.sir.comp <- as.matrix(a.comp$completeObs %*% as.matrix(a.sir$evectors[,1:2]))
 plot(a.sir.comp, col=a.kmeans$cluster)
 
- # Reduce b => 2 principal component (61%) & SIR
-  # S1:Dissatisfaction at all levels of daily life
-  # S2:Could be satisfied with the safety and living environment
+# Reduce b => 2 principal component (61%) & SIR
+# S1:Dissatisfaction at all levels of daily life
+# S2:Could be satisfied with the safety and living environment
 b.pca <- PCA(b.comp$completeObs, ncp=2, row.w = dataA$weight)
 get_eigenvalue(b.pca) #Variance
 par(mfrow=c(1, 2))
@@ -131,10 +132,10 @@ summary(b.sir)
 b.sir.comp <- as.matrix(b.comp$completeObs %*% as.matrix(b.sir$evectors[,1:2]))
 plot(b.sir.comp, col=b.kmeans$cluster)
 
- # Reduce c => 3 principal component (63%) & SIR
-  # S1:Overall trust in government agencies or institutions
-  # S2:Supporting to free speech and dissatisfaction of political officials
-  # S3:Distrust the central government and trust the local governments
+# Reduce c => 3 principal component (63%) & SIR
+# S1:Overall trust in government agencies or institutions
+# S2:Supporting to free speech and dissatisfaction of political officials
+# S3:Distrust the central government and trust the local governments
 c.pca <- PCA(c.comp$completeObs, ncp=3, row.w = dataA$weight)
 get_eigenvalue(c.pca) #Variance
 par(mfrow=c(1, 2))
@@ -147,9 +148,9 @@ summary(c.sir)
 c.sir.comp <- as.matrix(c.comp$completeObs %*% as.matrix(c.sir$evectors[,1:3]))
 plot(c.sir.comp[,1:2], col=c.kmeans$cluster)
 
- # Reduce land => 2 principal component (26%) & ISOMAP
-  # ISO1:Altitude
-  # ISO2:Agriculture to housing  
+# Reduce land => 2 principal component (26%) & ISOMAP
+# ISO1:Altitude
+# ISO2:Agriculture to housing  
 # land.pca <- PCA(dataA[, 1:63], ncp=2, row.w = dataA$weight)
 # get_eigenvalue(land.pca) #Variance
 # par(mfrow=c(1, 2))
@@ -158,9 +159,33 @@ plot(c.sir.comp[,1:2], col=c.kmeans$cluster)
 # land.isomap <- isomap(dist(dataA[, 1:63]), ndim=2, k=75)
 # plot(land.isomap, col=land.kmeans$cluster)
 # land.isomap$points
- # Regression ----------------------------------------------------
+# Regression ----------------------------------------------------
 a2.model <- lm(c.sir.comp[,3] ~ agri + forest + traffic + water + building +
-               gov + leisure + mine + factor(marrgp) + factor(edugp) + 
-               factor(sexgp) + agegp + incogp, data=dataA, weights=weight) 
+                 gov + leisure + mine + factor(marrgp) + factor(edugp) + 
+                 factor(sexgp) + agegp + incogp, data=dataA, weights=weight) 
 summary(a2.model)
+
+## Draw Map========================================================
+ntw.map1 <- taiwan.town.map[c("COUNTYNAME","TOWNNAME","TOWNCODE")]
+truemap1 <- left_join(ntw.map1, ld2,
+                      by= c("COUNTYNAME"="county","TOWNNAME"="town"))
+
+mp1 <- ggplot(data = truemap1) + geom_sf(aes(fill = agri)) +
+  scale_fill_distiller(palette = "Oranges", direction = 1, 
+                       name = "Agricultural") +
+  coord_sf(xlim = c(119, 123), ylim = c(25.5, 21.8), expand = F) + 
+  labs(title="Agricultural", x ="longitude", y = "latitude") +
+  theme_bw() + theme(legend.position = c(0.8, 0.2))
+ggsave(mp1, height = 1300 , width = 629)
+
+ggplot(data = truemap1) +
+  geom_sf(aes(fill = forest)) +
+  #  geom_sf_text(aes(label = TOWNNAME), size = 3) +
+  scale_fill_distiller(palette = "YlGn", direction = 1, 
+                       name = "Forest") +
+  labs(title="Forest in dataA", x ="longitude", y = "latitude")
+
+
+
+
 
