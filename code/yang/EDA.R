@@ -145,3 +145,34 @@ ggplot(data = melted_c_cor, aes(x=Var1, y=Var2, fill=value)) +
                        name="Pearson\nCorrelation") +
   ggtitle("dataC Correlation Matrix")
 ggsave("images/dataC_corr_image.png")
+
+
+#CORR
+a_sir <- as.data.frame(a.sir.comp[, 1 : 2])
+names(a_sir) <- c("a_sir1", "a_sir2")
+
+b_sir <- as.data.frame(b.sir.comp[, 1 : 2])
+names(b_sir) <- c("b_sir1", "b_sir2")
+
+c_sir <- as.data.frame(c.sir.comp[, 1 : 3])
+names(c_sir) <- c("c_sir1", "c_sir2", "c_sir3")
+
+l_sir <- as.data.frame(land.isomap$points[,1:2])
+names(l_sir) <- c("land_iso1", "land_iso2")
+
+r_cor <- (cor(cbind(a_sir, b_sir, c_sir, l_sir), use = "complete.obs"))
+#names(r_cor) <- c("a_sir1", "a_sir2", "b_sir1", "b_sir2", "c_sir1", "c_sir2", "c_sir3", "land_iso1", "land_iso2")
+#row.names(r_cor)<- c("a_sir1", "a_sir2", "b_sir1", "b_sir2", "c_sir1", "c_sir2", "c_sir3", "land_iso1", "land_iso2")
+#write.csv(r_cor, "dataset/dataC_cor_matrix")
+
+library(reshape2)
+melted_r_cor <- melt(r_cor)
+head(melted_r_cor)
+
+ggplot(data = melted_r_cor, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                       midpoint = 0, limit = c(-1,1), space = "Lab", 
+                       name="Pearson\nCorrelation") +
+  ggtitle("DataB Rec Correlation Matrix")
+ggsave("images/r_dataB_corr_image.png")
