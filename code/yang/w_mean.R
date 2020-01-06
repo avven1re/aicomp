@@ -33,3 +33,47 @@ names(wm_landABC)
 row.names(wm_landABC) <- c("dataA", "dataB", "dataC")
 wm_landABC
 write.csv(wm_landABC, "dataset/mean_landABC.csv")
+
+
+#corr land & ques
+a_cor <-cor(dataA[, 1 : 33], use = "complete.obs")
+b_cor <-cor(dataB[, 1 : 33], use = "complete.obs")
+c_cor <-cor(dataC[, 1 : 33], use = "complete.obs")
+write.csv(a_cor, "dataset/dataA_l_q_cor_matrix.csv")
+write.csv(b_cor, "dataset/dataB_l_q_cor_matrix.csv")
+write.csv(c_cor, "dataset/dataC_l_q_cor_matrix.csv")
+
+library(reshape2)
+melted_a_cor <- melt(a_cor)
+head(melted_a_cor)
+
+melted_b_cor <- melt(b_cor)
+head(melted_a_cor)
+
+melted_c_cor <- melt(c_cor)
+head(melted_a_cor)
+
+ggplot(data = melted_a_cor, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                       midpoint = 0, limit = c(-1,1), space = "Lab", 
+                       name="Pearson\nCorrelation") +
+  ggtitle("dataA Correlation Matrix")
+ggsave("images/dataA_l_q_corr_image.png")
+
+ggplot(data = melted_b_cor, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                       midpoint = 0, limit = c(-1,1), space = "Lab", 
+                       name="Pearson\nCorrelation") +
+  ggtitle("dataB Correlation Matrix")
+ggsave("images/dataB_l_q_corr_image.png")
+
+
+ggplot(data = melted_c_cor, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                       midpoint = 0, limit = c(-1,1), space = "Lab", 
+                       name="Pearson\nCorrelation") +
+  ggtitle("dataC Correlation Matrix")
+ggsave("images/dataC_l_q_corr_image.png")
