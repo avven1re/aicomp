@@ -1,37 +1,42 @@
 ## dataA ==========================================================
 # Dealing with missing-------------------------------------------
-a.comp <- imputePCA(dataA[, c(64:69)], ncp=2, row.w = dataA$weight)
-b.comp <- imputePCA(dataA[, c(70:78)], ncp=2, row.w = dataA$weight)
-c.comp <- imputePCA(dataA[, c(79:87)], ncp=2, row.w = dataA$weight)
+aa.comp <- imputePCA(dataA[, c(10:15)], ncp=2, row.w = dataA$weight)
+ab.comp <- imputePCA(dataA[, c(16:24)], ncp=2, row.w = dataA$weight)
+ac.comp <- imputePCA(dataA[, c(25:33)], ncp=2, row.w = dataA$weight)
 
 # Kmeans Cluster Analysis----------------------------------------
-# Cluster a => 3 cluster
-a.Nb <- NbClust(a.comp$completeObs, distance = "euclidean", 
-                min.nc=2, max.nc=10, method = "kmeans", 
-                index = "dunn")
-a.Nb$All.index #Max
+# Cluster a => 2 cluster
+aa.Nb <- NbClust(aa.comp$completeObs, distance = "euclidean", 
+                min.nc=2, max.nc=5, method = "kmeans",index = "sdbw")
+aa.Nb$All.index
+aa.Nb$Best.nc
 set.seed(123)
-a.kmeans <- kmeans(a.comp$completeObs, 3, 20)
+aa.kmeans <- kmeans(aa.comp$completeObs, 2, 20)
 
-# Cluster b => 3 cluster
-fviz_nbclust(b.comp$completeObs, kmeans, method = "wss", 
-             k.max = 10) + theme_minimal()
+# Cluster b => 2 cluster
+# fviz_nbclust(b.comp$completeObs, kmeans, method = "wss", 
+#              k.max = 10) + theme_minimal()
+ab.Nb <- NbClust(ab.comp$completeObs, distance = "euclidean", 
+                min.nc=2, max.nc=5, method = "kmeans",index = "sdbw")
+ab.Nb$All.index
+ab.Nb$Best.nc
 set.seed(123)
-b.kmeans <- kmeans(b.comp$completeObs, 3, 20)
+ab.kmeans <- kmeans(ab.comp$completeObs, 2, 20)
 
-# Cluster c => 4 cluster
-c.Nb <- NbClust(c.comp$completeObs, distance = "euclidean", 
-                min.nc=2, max.nc=10, method = "kmeans", index = "sdbw")
-c.Nb$All.index #Min
+# Cluster c => 2 cluster
+ac.Nb <- NbClust(ac.comp$completeObs, distance = "euclidean", 
+                min.nc=2, max.nc=5, method = "kmeans", index = "sdbw")
+ac.Nb$All.index
+ac.Nb$Best.nc
 set.seed(123)
-c.kmeans <- kmeans(c.comp$completeObs, 4, 20)
+ac.kmeans <- kmeans(ac.comp$completeObs, 4, 20)
 
 # Cluster Land => 7 cluster
-land.Nb <- NbClust(dataA[, 1:63], distance = "euclidean",
-                   min.nc=2, max.nc=10, method = "kmeans", index="sdbw")
-land.Nb$All.index
-set.seed(123)
-land.kmeans <- kmeans(c.comp$completeObs, 7, 20)
+# land.Nb <- NbClust(dataA[, 1:63], distance = "euclidean",
+#                    min.nc=2, max.nc=10, method = "kmeans", index="sdbw")
+# land.Nb$All.index
+# set.seed(123)
+# land.kmeans <- kmeans(c.comp$completeObs, 7, 20)
 
 # Dimension Reduction -------------------------------------------
 # Reduce a => 3 principal component (65%) & SIR
