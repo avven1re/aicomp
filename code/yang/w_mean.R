@@ -77,3 +77,152 @@ ggplot(data = melted_c_cor, aes(x=Var1, y=Var2, fill=value)) +
                        name="Pearson\nCorrelation") +
   ggtitle("dataC Correlation Matrix")
 ggsave("images/dataC_l_q_corr_image.png")
+
+#cortest matrix land & ques
+cor.test.mat <- function(data, vec_pos, type = "p.value"){
+  cortestl <- list()
+  cortest_mat <- matrix(NaN, length(vec_pos), length(vec_pos))
+  for (i in vec_pos) {
+    
+    for (k in vec_pos) {
+      re_test <- cor.test(data[, i], data[, k])
+      if(type == "p.value"){
+      cortest_mat[i, k] <- round(re_test$p.value, 3)
+      }
+      
+      if(type == "estimate"){
+        cortest_mat[i, k] <- round(re_test$estimate, 3)
+      }
+      
+      if(mode(type) == "numeric"){
+        cortest_mat[i, k] <- round(re_test[type], 3)
+      }
+    }
+  }
+  return(cortest_mat)
+}
+
+a_sir <- as.data.frame(a.sir.comp[, 1 : 2])
+names(a_sir) <- c("a_sir1", "a_sir2")
+
+b_sir <- as.data.frame(b.sir.comp[, 1 : 2])
+names(b_sir) <- c("b_sir1", "b_sir2")
+
+c_sir <- as.data.frame(c.sir.comp[, 1 : 3])
+names(c_sir) <- c("c_sir1", "c_sir2", "c_sir3")
+
+l_iso <- as.data.frame(land.isomap$points[,1:2])
+names(l_iso) <- c("land_iso1", "land_iso2")
+corr <- cbind(a_sir, b_sir, c_sir, dataA[ ,64:72], 
+              l_iso)
+names(corr)
+
+dataA_cor_test <- as.data.frame(cor.test.mat(corr, 1 : 18))
+names(dataA_cor_test) <- names(corr)
+row.names(dataA_cor_test) <- names(corr)
+head(dataA_cor_test)
+write.csv(dataA_cor_test, "dataset/dataA_pvalue_reduced_cortest_mat.csv")
+
+dataA_cor_test2 <- as.data.frame(cor.test.mat(corr, 1 : 18), type = "estimate")
+names(dataA_cor_test2) <- names(corr)
+row.names(dataA_cor_test2) <- names(corr)
+head(dataA_cor_test2)
+write.csv(dataA_cor_test2, "dataset/dataA_estimate_reduced_cortest_mat.csv")
+
+heatmap(as.matrix(dataA_cor_test))
+
+c_corr <- cor(corr, use = "complete.obs")
+melted_dataA_cor_test <- melt(c_corr)
+head(melted_dataA_cor_test)
+
+ggplot(data = melted_dataA_cor_test, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                       midpoint = 0, limit = c(-1,1), space = "Lab", 
+                       name="Pearson\nCorrelation") +
+  ggtitle("dataA Reduced Correlation Matrix")
+
+
+#dataB
+
+a_sir <- as.data.frame(a.sir.comp[, 1 : 2])
+names(a_sir) <- c("a_sir1", "a_sir2")
+
+b_sir <- as.data.frame(b.sir.comp[, 1 : 2])
+names(b_sir) <- c("b_sir1", "b_sir2")
+
+c_sir <- as.data.frame(c.sir.comp[, 1 : 3])
+names(c_sir) <- c("c_sir1", "c_sir2", "c_sir3")
+
+l_iso <- as.data.frame(land.isomap$points[,1:2])
+names(l_iso) <- c("land_iso1", "land_iso2")
+corr <- cbind(a_sir, b_sir, c_sir, dataB[ ,64:72], 
+              l_iso)
+names(corr)
+
+dataB_cor_test <- as.data.frame(cor.test.mat(corr, 1 : 18))
+names(dataB_cor_test) <- names(corr)
+row.names(dataB_cor_test) <- names(corr)
+head(dataB_cor_test)
+write.csv(dataB_cor_test, "dataset/dataB_pvalue_reduced_cortest_mat.csv")
+
+dataB_cor_test2 <- as.data.frame(cor.test.mat(corr, 1 : 18), type = "estimate")
+names(dataB_cor_test2) <- names(corr)
+row.names(dataB_cor_test2) <- names(corr)
+head(dataB_cor_test2)
+write.csv(dataB_cor_test2, "dataset/dataB_estimate_reduced_cortest_mat.csv")
+
+heatmap(as.matrix(dataB_cor_test))
+
+c_corr <- cor(corr, use = "complete.obs")
+melted_dataB_cor_test <- melt(c_corr)
+head(melted_dataB_cor_test)
+
+ggplot(data = melted_dataB_cor_test, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                       midpoint = 0, limit = c(-1,1), space = "Lab", 
+                       name="Pearson\nCorrelation") +
+  ggtitle("dataB Reduced Correlation Matrix")
+
+#dataC
+
+a_sir <- as.data.frame(a.sir.comp[, 1 : 2])
+names(a_sir) <- c("a_sir1", "a_sir2")
+
+b_sir <- as.data.frame(b.sir.comp[, 1 : 2])
+names(b_sir) <- c("b_sir1", "b_sir2")
+
+c_sir <- as.data.frame(c.sir.comp[, 1 : 3])
+names(c_sir) <- c("c_sir1", "c_sir2", "c_sir3")
+
+l_iso <- as.data.frame(land.isomap$points[,1:2])
+names(l_iso) <- c("land_iso1", "land_iso2")
+corr <- cbind(a_sir, b_sir, c_sir, dataC[ ,64:72], 
+              l_iso)
+names(corr)
+
+dataC_cor_test <- as.data.frame(cor.test.mat(corr, 1 : 18))
+names(dataC_cor_test) <- names(corr)
+row.names(dataC_cor_test) <- names(corr)
+head(dataC_cor_test)
+write.csv(dataC_cor_test, "dataset/dataC_pvalue_reduced_cortest_mat.csv")
+
+dataC_cor_test2 <- as.data.frame(cor.test.mat(corr, 1 : 18), type = "estimate")
+names(dataC_cor_test2) <- names(corr)
+row.names(dataC_cor_test2) <- names(corr)
+head(dataC_cor_test2)
+write.csv(dataC_cor_test2, "dataset/dataC_estimate_reduced_cortest_mat.csv")
+
+heatmap(as.matrix(dataC_cor_test))
+
+c_corr <- cor(corr, use = "complete.obs")
+melted_dataC_cor_test <- melt(c_corr)
+head(melted_dataC_cor_test)
+
+ggplot(data = melted_dataC_cor_test, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()+
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                       midpoint = 0, limit = c(-1,1), space = "Lab", 
+                       name="Pearson\nCorrelation") +
+  ggtitle("dataC Reduced Correlation Matrix")
