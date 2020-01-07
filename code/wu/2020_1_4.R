@@ -1,6 +1,7 @@
 ## packages=======================================================
 pkg <- c("sf", "gridExtra", "dplyr", "FactoMineR", "factoextra", 
-         "corrplot", "vegan","missMDA", "stats", "NbClust", "dr", "glmnet")
+         "corrplot", "vegan","missMDA", "stats", "NbClust", "dr",
+         "mice", "VIM","glmnet")
 lapply(pkg, library, character.only=T)
 
 ## Reading & Cleaning Data ========================================
@@ -58,6 +59,15 @@ dataC = dataA[sample(nrow(dataA),33),]
 
 ## dataA ==========================================================
 # Dealing with missing-------------------------------------------
+dataA.aggrplot<-aggr(dataA, col=c('lightblue','red'), 
+                     numbers=TRUE, prop = TRUE, sortVars=TRUE, 
+                     labels=names(dataA), cex.axis=.7, gap=3)
+dataB.aggrplot<-aggr(dataB, col=c('lightblue','red'), 
+                     numbers=TRUE, prop = TRUE, sortVars=TRUE, 
+                     labels=names(dataB), cex.axis=.7, gap=3)
+dataC.aggrplot<-aggr(dataC, col=c('lightblue','red'), 
+                     numbers=TRUE, prop = TRUE, sortVars=TRUE, 
+                     labels=names(dataA), cex.axis=.7, gap=3)
 a.comp <- imputePCA(dataA[, c(73:78)], ncp=2, row.w = dataA$weight)
 b.comp <- imputePCA(dataA[, c(79:87)], ncp=2, row.w = dataA$weight)
 c.comp <- imputePCA(dataA[, c(88:96)], ncp=2, row.w = dataA$weight)
